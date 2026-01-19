@@ -1,0 +1,117 @@
+[
+  {
+    "id": "1",
+    "capa": "/covers/1984.jpg",
+    "nome": "1984",
+    "autor": "George Orwell",
+    "generos": [
+      "Distopia",
+      "Ficção Científica",
+      "Política"
+    ],
+    "paginas": 328,
+    "resumo": "Em uma sociedade totalitária vigiada pelo Grande Irmão, Winston Smith começa a questionar o regime opressor e a manipulação da verdade.",
+    "status": [
+      "Concluído",
+      "concluido"
+    ],
+    "dataInicio": "2025-01-10",
+    "dataFim": "2025-01-25",
+    "avaliacao": 5
+  },
+  {
+    "id": "2",
+    "capa": "/covers/O Hobbit.jpg",
+    "nome": "O Hobbit",
+    "autor": "J. R. R. Tolkien",
+    "generos": [
+      "Fantasia",
+      "Aventura"
+    ],
+    "paginas": 310,
+    "resumo": "Bilbo Bolseiro é levado a uma jornada inesperada com anões para recuperar um tesouro guardado por um dragão.",
+    "status": [
+      "Em andamento",
+      "andamento"
+    ],
+    "dataInicio": "2026-01-05",
+    "dataFim": null,
+    "avaliacao": null
+  },
+  {
+    "id": "3",
+    "capa": "/covers/Dom Casmurro.jpg",
+    "nome": "Dom Casmurro",
+    "autor": "Machado de Assis",
+    "generos": [
+      "Romance",
+      "Literatura Brasileira"
+    ],
+    "paginas": 256,
+    "resumo": "Bentinho narra sua história com Capitu, levantando dúvidas sobre amor, ciúme e traição.",
+    "status": [
+      "Abandonado",
+      "abandonado"
+    ],
+    "dataInicio": "2025-11-02",
+    "dataFim": "2025-11-20",
+    "avaliacao": 3
+  },
+  {
+    "id": "4",
+    "capa": "/covers/O Poder do Hábito.jpg",
+    "nome": "O Poder do Hábito",
+    "autor": "Charles Duhigg",
+    "generos": [
+      "Não-ficção",
+      "Desenvolvimento Pessoal"
+    ],
+    "paginas": 408,
+    "resumo": "O livro explora como hábitos funcionam, como são formados e como podem ser mudados em nível pessoal e organizacional.",
+    "status": [
+      "Próxima leitura",
+      "proxima"
+    ],
+    "dataInicio": null,
+    "dataFim": null,
+    "avaliacao": null
+  },
+  {
+    "id": "5",
+    "capa": "/covers/Clean Code.jpg",
+    "nome": "Clean Code",
+    "autor": "Robert C. Martin",
+    "generos": [
+      "Tecnologia",
+      "Programação"
+    ],
+    "paginas": 464,
+    "resumo": "Apresenta princípios e boas práticas para escrever código limpo, legível e sustentável.",
+    "status": [
+      "Na fila",
+      "fila"
+    ],
+    "dataInicio": null,
+    "dataFim": null,
+    "avaliacao": null
+  },
+  {
+    "id": "6",
+    "capa": "/covers/A Revolução dos Bichos.jpg",
+    "nome": "A Revolução dos Bichos",
+    "autor": "George Orwell",
+    "generos": [
+      "Fábula",
+      "Sátira Política"
+    ],
+    "paginas": 152,
+    "resumo": "Animais de uma fazenda se rebelam contra os humanos, mas acabam criando um regime tão opressor quanto o anterior.",
+    "status": [
+      "Concluído",
+      "concluido"
+    ],
+    "dataInicio": "2024-12-01",
+    "dataFim": "2024-12-05",
+    "avaliacao": 4
+  }
+]
