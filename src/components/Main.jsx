@@ -1,4 +1,4 @@
-import Bookcase from "./Bookcase";
+import Bookcase from "./books/Bookcase";
 import ReadingStatus from "./ReadingStatus";
 import TabButtons from "./TabButtons";
 import { FilterContext } from "../store/filter-context";

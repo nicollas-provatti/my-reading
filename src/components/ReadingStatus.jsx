@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { BookContext } from "../store/book-context";
-import Book from "./Book";
+import Book from "./books/Book";
 
 const statusColors = {
   concluido: "text-green-950 bg-green-100",
