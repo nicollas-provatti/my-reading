@@ -11,7 +11,8 @@ const statusStyles = {
 
 function formatDate(date) {
   if (!date) return "";
-  return new Intl.DateTimeFormat("pt-BR").format(new Date(date));
+  const [year, month, day] = date.split("-");
+  return `${day}/${month}/${year}`;
 }
 
 function BookDetailsModal({ book, onClose }) {
