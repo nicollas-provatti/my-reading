@@ -1,6 +1,6 @@
 import { useState } from "react";
 import TabButton from "./TabButton";
-import NewBook from "./NewBook";
+import NewBook from "./books/modals/NewBookModal";
 
 function TabButtons() {
   const [isModalOpen, setIsModalOpen] = useState(false);
