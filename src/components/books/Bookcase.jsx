@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import Book from "./Book";
-import { BookContext } from "../../store/book-context";
+import { BookContext } from "../../store/books/book-context";
 
 function Bookcase() {
   const { books } = useContext(BookContext);

@@ -1,6 +1,6 @@
 import { useState, useContext } from "react";
 import { IoMdClose } from "react-icons/io";
-import { BookContext } from "../../store/book-context";
+import { BookContext } from "../../store/books/book-context";
 import Input from "./Input";
 import MultipleSelectInput from "./MultipleSelectInput";
 import RatingInput from "./RatingInput";

@@ -1,7 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
 import { createContext, useEffect, useReducer } from "react";
-// import books from "../data/books.json";
-import * as bookApi from "../services/bookApi.js";
+import * as bookApi from "../../services/bookApi.js";
+import { bookReducer } from "./book-reducer.jsx";
 
 export const BookContext = createContext({
   books: [],
@@ -9,35 +9,6 @@ export const BookContext = createContext({
   deleteBook: () => {},
   editBook: () => {},
 });
-
-function bookReducer(state, action) {
-  switch (action.type) {
-    case "ADD_BOOK":
-      return {
-        ...state,
-        books: [...state.books, action.payload],
-      };
-    case "DELETE_BOOK":
-      return {
-        ...state,
-        books: state.books.filter((book) => book.id !== action.payload),
-      };
-    case "EDIT_BOOK":
-      return {
-        ...state,
-        books: state.books.map((book) =>
-          book.id === action.payload.id ? action.payload : book,
-        ),
-      };
-    case "SET_BOOKS":
-      return {
-        ...state,
-        books: action.payload,
-      };
-    default:
-      return state;
-  }
-}
 
 function BookContextProvider({ children }) {
   const [booksState, booksDispatch] = useReducer(bookReducer, {

@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
 import BookDetails from "./modals/BookDetailsModal";
 import { CiEdit, CiTrash } from "react-icons/ci";
-import { BookContext } from "../../store/book-context";
+import { BookContext } from "../../store/books/book-context";
 import EditBookModal from "./modals/EditBookModal";
 import DeleteBookModal from "./modals/DeleteBookModal";
 

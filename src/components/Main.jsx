@@ -3,7 +3,7 @@ import ReadingStatus from "./ReadingStatus";
 import TabButtons from "./TabButtons";
 import { FilterContext } from "../store/filter-context";
 import { useContext } from "react";
-import BookContextProvider from "../store/book-context";
+import BookContextProvider from "../store/books/book-context";
 
 function Main() {
   const { filter } = useContext(FilterContext);
