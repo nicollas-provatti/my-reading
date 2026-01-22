@@ -1,6 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
-import { createContext, useReducer } from "react";
-import books from "../data/books.json";
+import { createContext, useEffect, useReducer } from "react";
+// import books from "../data/books.json";
+import * as bookApi from "../services/bookApi.js";
 
 export const BookContext = createContext({
   books: [],
@@ -28,6 +29,11 @@ function bookReducer(state, action) {
           book.id === action.payload.id ? action.payload : book,
         ),
       };
+    case "SET_BOOKS":
+      return {
+        ...state,
+        books: action.payload,
+      };
     default:
       return state;
   }
@@ -35,24 +41,31 @@ function bookReducer(state, action) {
 
 function BookContextProvider({ children }) {
   const [booksState, booksDispatch] = useReducer(bookReducer, {
-    books: books,
+    books: [],
   });
 
-  function handleAddBook(book) {
-    const newBook = {
-      ...book,
-      id: crypto.randomUUID(),
-    };
+  useEffect(() => {
+    async function loadBooks() {
+      const books = await bookApi.getBooks();
+      booksDispatch({ type: "SET_BOOKS", payload: books });
+    }
 
+    loadBooks();
+  }, []);
+
+  async function handleAddBook(book) {
+    const newBook = await bookApi.addBook(book);
     booksDispatch({ type: "ADD_BOOK", payload: newBook });
   }
 
-  function handleDeleteBook(id) {
+  async function handleDeleteBook(id) {
+    await bookApi.deleteBook(id);
     booksDispatch({ type: "DELETE_BOOK", payload: id });
   }
 
-  function handleEditBook(bookUpdate) {
-    booksDispatch({ type: "EDIT_BOOK", payload: bookUpdate });
+  async function handleEditBook(bookUpdate) {
+    const updatedBook = await bookApi.editBook(bookUpdate.id, bookUpdate);
+    booksDispatch({ type: "EDIT_BOOK", payload: updatedBook });
   }
 
   const ctxValue = {
