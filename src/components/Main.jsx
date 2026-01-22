@@ -9,7 +9,7 @@ function Main() {
   const { filter } = useContext(FilterContext);
 
   return (
-    <main className="my-5 max-w-7xl px-6 md:mx-auto">
+    <main className="flex-1 my-5 w-full max-w-7xl px-6 md:mx-auto">
       <BookContextProvider>
         <TabButtons />
         {filter === "bookcase" && <Bookcase />}
