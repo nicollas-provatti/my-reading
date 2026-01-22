@@ -5,6 +5,8 @@ import { bookReducer } from "./book-reducer.jsx";
 
 export const BookContext = createContext({
   books: [],
+  loading: false,
+  error: null,
   addBook: () => {},
   deleteBook: () => {},
   editBook: () => {},
@@ -13,34 +15,70 @@ export const BookContext = createContext({
 function BookContextProvider({ children }) {
   const [booksState, booksDispatch] = useReducer(bookReducer, {
     books: [],
+    loading: false,
+    error: null,
   });
 
   useEffect(() => {
     async function loadBooks() {
-      const books = await bookApi.getBooks();
-      booksDispatch({ type: "SET_BOOKS", payload: books });
+      try {
+        booksDispatch({ type: "LOADING" });
+        const books = await bookApi.getBooks();
+        booksDispatch({ type: "SET_BOOKS", payload: books });
+      } catch (error) {
+        booksDispatch({
+          type: "ERROR",
+          payload: "Erro ao carregar livros",
+        });
+      }
     }
 
     loadBooks();
   }, []);
 
   async function handleAddBook(book) {
-    const newBook = await bookApi.addBook(book);
-    booksDispatch({ type: "ADD_BOOK", payload: newBook });
+    try {
+      booksDispatch({ type: "LOADING" });
+      const newBook = await bookApi.addBook(book);
+      booksDispatch({ type: "ADD_BOOK", payload: newBook });
+    } catch (error) {
+      booksDispatch({
+        type: "ERROR",
+        payload: "Erro ao adicionar livro",
+      });
+    }
   }
 
   async function handleDeleteBook(id) {
-    await bookApi.deleteBook(id);
-    booksDispatch({ type: "DELETE_BOOK", payload: id });
+    try {
+      booksDispatch({ type: "LOADING" });
+      await bookApi.deleteBook(id);
+      booksDispatch({ type: "DELETE_BOOK", payload: id });
+    } catch (error) {
+      booksDispatch({
+        type: "ERROR",
+        payload: "Erro ao remover livro",
+      });
+    }
   }
 
   async function handleEditBook(bookUpdate) {
-    const updatedBook = await bookApi.editBook(bookUpdate.id, bookUpdate);
-    booksDispatch({ type: "EDIT_BOOK", payload: updatedBook });
+    try {
+      booksDispatch({ type: "LOADING" });
+      const updatedBook = await bookApi.editBook(bookUpdate.id, bookUpdate);
+      booksDispatch({ type: "EDIT_BOOK", payload: updatedBook });
+    } catch (error) {
+      booksDispatch({
+        type: "ERROR",
+        payload: "Erro ao editar livro",
+      });
+    }
   }
 
   const ctxValue = {
     books: booksState.books,
+    loading: booksState.loading,
+    error: booksState.error,
     addBook: handleAddBook,
     deleteBook: handleDeleteBook,
     editBook: handleEditBook,

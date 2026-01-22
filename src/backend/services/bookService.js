@@ -4,6 +4,7 @@ import path from "path";
 const dataPath = path.resolve("data/books.json");
 
 export async function getAllBooks() {
+  await new Promise(resolve => setTimeout(resolve, 1000));
   const data = await readFile(dataPath, "utf-8");
   return JSON.parse(data);
 }
