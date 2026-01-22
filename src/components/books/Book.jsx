@@ -1,7 +1,7 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
+import { useBooks } from "../../store/books/use-books";
 import BookDetails from "./modals/BookDetailsModal";
 import { CiEdit, CiTrash } from "react-icons/ci";
-import { BookContext } from "../../store/books/book-context";
 import EditBookModal from "./modals/EditBookModal";
 import DeleteBookModal from "./modals/DeleteBookModal";
 
@@ -14,7 +14,7 @@ const statusStyles = {
 };
 
 function Book({ book, filter }) {
-  const { deleteBook } = useContext(BookContext);
+  const { deleteBook } = useBooks();
   const [isModalDetailsOpen, setIsModalDetailsOpen] = useState(false);
   const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false);
   const [isModalEditOpen, setIsModalEditOpen] = useState(false);
@@ -83,7 +83,10 @@ function Book({ book, filter }) {
           <h3 className="text-sm font-light">{author}</h3>
           <ul className="flex gap-2">
             {genres.map((gender) => (
-              <li key={gender} className="px-2 py-1 rounded-md text-xs text-zinc-800 bg-zinc-200">
+              <li
+                key={gender}
+                className="px-2 py-1 rounded-md text-xs text-zinc-800 bg-zinc-200"
+              >
                 {gender}
               </li>
             ))}

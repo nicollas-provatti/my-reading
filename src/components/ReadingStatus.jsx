@@ -1,5 +1,4 @@
-import { useContext } from "react";
-import { BookContext } from "../store/books/book-context";
+import { useBooks } from "../store/books/use-books";
 import Book from "./books/Book";
 
 const statusColors = {
@@ -26,7 +25,7 @@ function Card({ text, books, property }) {
 }
 
 function ReadingStatus() {
-  const { books } = useContext(BookContext);
+  const { books } = useBooks();
 
   const completed = books.filter((book) => book.status[1] === "concluido");
   const inProgress = books.filter((book) => book.status[1] === "andamento");

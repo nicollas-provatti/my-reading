@@ -1,9 +1,9 @@
-import { useContext } from "react";
+import { useBooks } from "../../store/books/use-books";
 import Book from "./Book";
-import { BookContext } from "../../store/books/book-context";
+
 
 function Bookcase() {
-  const { books, loading, error } = useContext(BookContext);
+  const { books, loading, error } = useBooks();
 
   if (loading) return <p className="text-center">Carregando...</p>;
   if (error) return <p className="text-center">{error}</p>

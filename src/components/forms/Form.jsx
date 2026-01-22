@@ -1,6 +1,6 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
+import { useBooks } from "../../store/books/use-books";
 import { IoMdClose } from "react-icons/io";
-import { BookContext } from "../../store/books/book-context";
 import Input from "./Input";
 import MultipleSelectInput from "./MultipleSelectInput";
 import RatingInput from "./RatingInput";
@@ -32,7 +32,7 @@ function Form({ close, isEditMode }) {
   const genres = book?.genres ?? [];
   const defaultRating = book?.assessment ?? 0;
 
-  const { addBook, editBook } = useContext(BookContext);
+  const { addBook, editBook } = useBooks();
   const [selectedGenres, setSelectedGenres] = useState(genres);
   const [rating, setRating] = useState(defaultRating);
 
