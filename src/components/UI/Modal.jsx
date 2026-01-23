@@ -22,7 +22,7 @@ function Modal({ onClose, children }) {
       onClick={handleClose}
     >
       <div
-        className="flex flex-col gap-5 bg-white p-4 w-full max-w-4xl max-h-155 overflow-y-auto rounded-lg md:px-8 lg:px-10"
+        className="flex flex-col gap-3 bg-white p-6 w-full max-w-4xl max-h-155 overflow-y-auto rounded-lg"
         onClick={(e) => e.stopPropagation()}
       >
         {children({ close: handleClose })}

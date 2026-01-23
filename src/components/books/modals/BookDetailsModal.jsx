@@ -37,73 +37,73 @@ function BookDetailsModal({ book, onClose }) {
       {({ close }) => {
         return (
           <>
-            <div className="flex justify-between items-center border-b border-zinc-300 pb-2">
+            <div className="flex justify-between items-center px-3 py-2 bg-white shadow-sm rounded-md">
               <h2 className="font-semibold text-lg">Detalhes do livro</h2>
               <button
-                className="self-end p-1 rounded-full text-white bg-red-200 cursor-pointer transition-colors duration-200 hover:bg-red-300"
+                className="p-2 rounded-full text-zinc-500 bg-zinc-50 hover:bg-zinc-100 transition cursor-pointer"
                 onClick={close}
               >
                 <IoMdClose />
               </button>
             </div>
-            <div>
+            <div className="grid gap-6 md:grid-cols-[220px_1fr]">
               <div className="max-w-78 m-auto">
-                <img src={cover} alt={name} className="w-full" />
+                <img
+                  src={cover}
+                  alt={name}
+                  className="w-full rounded-md shadow-md"
+                />
               </div>
               <div className="flex flex-col gap-4">
-                <h1 className="border-t border-zinc-300 pt-1 font-semibold text-xl">
-                  {name}
-                </h1>
-                <p>
-                  <strong className="font-semibold">Autor: </strong>
-                  {author}
+                <div className="flex items-center justify-between">
+                  <h1 className="text-2xl font-bold leading-tight">{name}</h1>
+                  {assessment !== null && assessment !== 0 && (
+                    <p>{"⭐".repeat(assessment)}</p>
+                  )}
+                </div>
+                <p className="text-sm text-zinc-600">
+                  por <span className="font-medium">{author}</span>
                 </p>
-                <ul className="flex gap-2">
-                  <strong className="font-semibold">Gêneros: </strong>
+                <ul className="flex flex-wrap gap-2">
                   {genres.map((gender) => (
                     <li
-                      className="px-2 py-1 rounded-md text-xs text-zinc-800 bg-zinc-200"
                       key={gender}
+                      className="px-3 py-1 rounded-full text-xs bg-zinc-100 text-zinc-700"
                     >
                       {gender}
                     </li>
                   ))}
                 </ul>
-                <p>
-                  <strong className="font-semibold">Número de páginas: </strong>
-                  {pages}
+                <p className="text-zinc-700 text-sm">
+                  <strong className="font-medium">{pages}</strong> páginas
                 </p>
+                <div className="border-t border-zinc-200 pt-4">
+                  <p className="text-sm leading-relaxed text-zinc-800 italic">
+                    “{summary}”
+                  </p>
+                </div>
                 <p>
-                  <strong className="font-semibold">Resumo: </strong>"{summary}"
-                </p>
-                <p>
-                  <strong className="font-semibold">Status: </strong>{" "}
                   <span
-                    className={`px-2 py-1 rounded-md text-sm ${statusStyles[status[1]]}`}
+                    className={`inline-block px-3 py-1 rounded-full text-xs font-semibold ${statusStyles[status[1]]}`}
                   >
                     {status[0]}
                   </span>
                 </p>
-                {formattedStartDate && (
-                  <p>
-                    <strong className="font-semibold">Data de início: </strong>
-                    {formattedStartDate}
-                  </p>
-                )}
+                <div className="flex flex-wrap gap-4 text-sm text-zinc-700">
+                  {formattedStartDate && (
+                    <span>
+                      <strong className="font-semibold">Início: </strong>
+                      {formattedStartDate}
+                    </span>
+                  )}
 
-                {formattedEndDate && (
-                  <p>
-                    <strong className="font-semibold">Data de fim: </strong>
-                    {formattedEndDate}
-                  </p>
-                )}
-
-                {assessment !== null && assessment !== 0 && (
-                  <p>
-                    <strong className="font-semibold">Avaliação: </strong>
-                    {"⭐".repeat(assessment)}
-                  </p>
-                )}
+                  {formattedEndDate && (
+                    <span>
+                      <strong className="font-semibold">Fim: </strong>
+                      {formattedEndDate}
+                    </span>
+                  )}
+                </div>
               </div>
             </div>
           </>
