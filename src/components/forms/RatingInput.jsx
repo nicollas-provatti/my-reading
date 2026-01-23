@@ -1,10 +1,10 @@
 function RatingInput({ rating, onClick }) {
   return (
-    <div className="flex items-center gap-1">
+    <div className="flex flex-col gap-1">
       <label htmlFor="rating" className="font-semibold">
         Avaliação:{" "}
       </label>
-      <div className="rating rating-sm">
+      <div className="rating rating-sm border border-zinc-300 rounded-md p-2">
         <input
           type="radio"
           name="rating-6"

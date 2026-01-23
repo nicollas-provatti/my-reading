@@ -15,7 +15,7 @@ function Select({ book }) {
         name="status"
         id="status"
         defaultValue={`${book?.status[0]}`}
-        className="border p-1 border-zinc-300 rounded-sm"
+        className="border border-zinc-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-300 transition"
       >
         <option value="Em andamento">Em andamento</option>
         <option value="Próxima leitura">Próxima leitura</option>
@@ -90,10 +90,10 @@ function Form({ close, isEditMode }) {
 
   return (
     <>
-      <div className="flex justify-between items-center">
-        <h2 className="font-semibold text-lg">Prencha os dados</h2>
+      <div className="flex justify-between items-center px-3 py-2 bg-white shadow-sm rounded-md">
+        <h2 className="font-semibold text-lg">Preencha os dados</h2>
         <button
-          className="self-end p-1 rounded-full text-white bg-red-200 cursor-pointer transition-colors duration-200 hover:bg-red-300"
+          className="p-2 rounded-full text-zinc-500 bg-zinc-50 hover:bg-zinc-100 transition cursor-pointer"
           onClick={close}
         >
           <IoMdClose />
@@ -121,26 +121,28 @@ function Form({ close, isEditMode }) {
           placeholder="Informe o nome do livro"
         />
 
-        <Input
-          label="Autor"
-          id="author"
-          type="text"
-          name="author"
-          defaultValue={`${isEditMode ? book.author : ""}`}
-          placeholder="Informe o nome do autor"
-        />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <Input
+            label="Autor"
+            id="author"
+            type="text"
+            name="author"
+            defaultValue={`${isEditMode ? book.author : ""}`}
+            placeholder="Informe o nome do autor"
+          />
+
+          <Input
+            label="Número de páginas"
+            id="numberPages"
+            type="number"
+            name="numberPages"
+            defaultValue={`${isEditMode ? book.pages : ""}`}
+            placeholder="Informe o número de páginas"
+            min="0"
+          />
+        </div>
 
         <MultipleSelectInput book={book} onChange={handleGenreChange} />
-
-        <Input
-          label="Número de páginas"
-          id="numberPages"
-          type="number"
-          name="numberPages"
-          defaultValue={`${isEditMode ? book.pages : ""}`}
-          placeholder="Informe o número de páginas"
-          min="0"
-        />
 
         <Input
           label="Resumo"
@@ -152,35 +154,39 @@ function Form({ close, isEditMode }) {
           cols="32"
         />
 
-        <Select book={book} />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <Select book={book} />
 
-        <Input
-          label="Início da leitura"
-          id="startReading"
-          type="date"
-          defaultValue={`${isEditMode ? book.startDate : ""}`}
-          name="startReading"
-        />
+          <RatingInput onClick={handleChoseRating} rating={defaultRating} />
+        </div>
 
-        <Input
-          label="Fim da leitura"
-          id="endReading"
-          type="date"
-          defaultValue={`${isEditMode ? book.endDate : ""}`}
-          name="endReading"
-        />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <Input
+            label="Início da leitura"
+            id="startReading"
+            type="date"
+            defaultValue={`${isEditMode ? book.startDate : ""}`}
+            name="startReading"
+          />
 
-        <RatingInput onClick={handleChoseRating} rating={defaultRating} />
+          <Input
+            label="Fim da leitura"
+            id="endReading"
+            type="date"
+            defaultValue={`${isEditMode ? book.endDate : ""}`}
+            name="endReading"
+          />
+        </div>
 
         <div className="self-end flex gap-3">
           <button
-            className="px-3 py-2 text-black/80 bg-zinc-300 rounded-md cursor-pointer transition-colors duration-300 hover:bg-zinc-400"
+            className=" px-4 py-2 rounded-md bg-zinc-200 text-zinc-700 cursor-pointer hover:bg-zinc-300 transition"
             type="button"
             onClick={close}
           >
             Cancelar
           </button>
-          <button className="px-3 py-2 text-black/80 bg-blue-300 rounded-md cursor-pointer transition-colors duration-300 hover:bg-blue-400">
+          <button className=" px-4 py-2 rounded-md bg-blue-500 text-white font-medium cursor-pointer hover:bg-blue-600 transition">
             {isEditMode ? "Salvar" : "Adicionar"}
           </button>
         </div>

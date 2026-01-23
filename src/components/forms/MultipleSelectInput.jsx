@@ -21,11 +21,14 @@ function MultipleSelectInput({ book, onChange }) {
   return (
     <div>
       <label className="font-semibold">Gênero(s)</label>
-      <div className="grid grid-cols-2 mt-1 md:grid-cols-3">
+      <div className="grid grid-cols-2 mt-1 gap-2 justify-items-start md:grid-cols-3">
         {GENRES.map((genre) => {
           const isChecked = geners.includes(genre);
           return (
-            <label key={genre} className="flex items-center gap-2">
+            <label
+              key={genre}
+              className={`flex gap-2 px-2 py-1 rounded-md cursor-pointer text-sm ${isChecked ? "bg-blue-100 text-blue-900" : "bg-zinc-100"}`}
+            >
               <input
                 type="checkbox"
                 defaultChecked={isChecked}
