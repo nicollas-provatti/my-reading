@@ -1,6 +1,6 @@
 function Header() {
   return (
-    <header className="relative py-3 min-h-50 md:min-h-65 bg-[url(libary.jpg)] bg-center bg-cover shadow-md">
+    <header className="relative py-3 min-h-50 md:min-h-65 bg-[url('/library.jpg')] bg-center bg-cover shadow-md">
       {/* overlay gradient */}
       <div className="absolute inset-0 bg-linear-to-b from-black/70 via-black/40 to-transparent" />
 
