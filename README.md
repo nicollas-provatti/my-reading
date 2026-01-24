@@ -1,16 +1,88 @@
-# React + Vite
+# 📚 Minhas Leituras
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aplicação web para gerenciamento de leituras pessoais, permitindo cadastrar livros, acompanhar status de leitura, avaliações e visualizar detalhes de cada obra.
 
-Currently, two official plugins are available:
+O projeto foi desenvolvido com foco em **boas práticas de React**, organização de estado global e experiência do usuário.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## 🚀 Funcionalidades
 
-The React Compiler is currently not compatible with SWC. See [this issue](https://github.com/vitejs/vite-plugin-react/issues/428) for tracking the progress.
+- 📖 Cadastro de livros
+- ✏️ Edição de informações
+- 🗑️ Remoção de livros
+- 🔎 Visualização detalhada de cada livro
+- 📊 Organização por status de leitura
+- ⭐ Avaliação por estrelas
+- ⏳ Feedback visual de carregamento e ações assíncronas
+- ⚠️ Tratamento de erros
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 📷 Captura
+
+![public/screenshot.png](public/screenshot.png)
+
+---
+
+## 🛠️ Tecnologias utilizadas
+
+- **React**
+- **Context API**
+- **Custom Hooks**
+- **Tailwind CSS**
+- **DaisyUI**
+- **React Icons**
+- **JavaScript (ES6+)**
+
+---
+
+## 🧠 Conceitos aplicados
+
+- Gerenciamento de estado global com Context + Reducer
+- Separação entre:
+  - `isFetching` (busca de dados)
+  - `isMutating` (operações de escrita)
+- Simulação de API com delay artificial
+- Atualização controlada da UI durante mutações
+- Componentização e reutilização de UI
+- Organização de pastas orientada a domínio
+- Feedback visual de loading e erro
+- Modais reutilizáveis
+
+---
+
+## 💻 Como rodar o projeto localmente
+
+```bash
+# Clone o repositório
+git clone https://github.com/seu-usuario/minhas-leituras.git
+
+# Para o frontend:
+# 1. Entre na pasta do projeto
+cd my-readings
+# 2. Instale as dependências
+npm install
+
+# 3. Rode a aplicação
+npm run dev
+
+# Para o backend (em outro terminal):
+# 1. Entre na pasta do backend
+cd my-readings/backend
+
+# 2. Instale as dependências
+npm install
+
+# 3. Rode a aplicação
+npm run dev
+```
+
+---
+
+## 🌐 Deploy
+
+🔗 Acesse a aplicação online:
+(adicione aqui o link do deploy depois)
+
+
