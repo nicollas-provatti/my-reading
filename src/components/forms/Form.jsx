@@ -4,6 +4,7 @@ import { IoMdClose } from "react-icons/io";
 import Input from "./Input";
 import MultipleSelectInput from "./MultipleSelectInput";
 import RatingInput from "./RatingInput";
+import ButtonSpinner from "../UI/ButtonSpinner";
 
 function Select({ book }) {
   return (
@@ -88,12 +89,6 @@ function Form({ close, isEditMode }) {
       close();
     }
   }
-
-  const buttonText = isMutating
-    ? "Salvando..."
-    : isEditMode
-      ? "Salvar"
-      : "Adicionar";
 
   return (
     <>
@@ -194,10 +189,19 @@ function Form({ close, isEditMode }) {
             Cancelar
           </button>
           <button
-            className="px-4 py-2 rounded-md bg-blue-500 text-white font-medium cursor-pointer hover:bg-blue-600 transition"
+            className="flex items-center justify-center gap-2 px-4 py-2 rounded-md bg-blue-500 text-white font-medium cursor-pointer hover:bg-blue-600 transition disabled:opacity-60"
             disabled={isMutating}
           >
-            {buttonText}
+            {isMutating ? (
+              <>
+                <ButtonSpinner />
+                Salvando...
+              </>
+            ) : isEditMode ? (
+              "Salvar"
+            ) : (
+              "Adicionar"
+            )}
           </button>
         </div>
       </form>

@@ -1,5 +1,6 @@
 import Modal from "../../UI/Modal";
 import { useBooks } from "../../../store/books/use-books";
+import ButtonSpinner from "../../UI/ButtonSpinner";
 
 function DeleteBookModal({ bookName, onClose, onDelete }) {
   const { isMutating } = useBooks();
@@ -20,11 +21,18 @@ function DeleteBookModal({ bookName, onClose, onDelete }) {
                 Cancelar
               </button>
               <button
-                className="bg-blue-100 text-black/80 p-2 rounded-lg cursor-pointer hover:bg-blue-200 transition-colors duration-200"
+                className="flex items-center justify-center gap-2 bg-blue-100 text-black/80 p-2 rounded-lg cursor-pointer hover:bg-blue-200 transition-colors duration-200 disabled:opacity-60"
                 onClick={onDelete}
                 disabled={isMutating}
               >
-                {isMutating ? "Salvando..." : "Confirmar"}
+                {isMutating ? (
+                  <>
+                    <ButtonSpinner />
+                    Salvando...
+                  </>
+                ) : (
+                  "Confirmar"
+                )}
               </button>
             </div>
           </>

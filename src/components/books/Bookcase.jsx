@@ -1,10 +1,11 @@
 import { useBooks } from "../../store/books/use-books";
 import Book from "./Book";
+import Spinner from "../UI/Spinner";
 
 function Bookcase() {
   const { books, isFetching, error } = useBooks();
 
-  if (isFetching) return <p className="text-center">Carregando...</p>;
+  if (isFetching) return <Spinner text="Carregando livros..." />;
   if (error) return <p className="text-center">{error}</p>
 
   return (
