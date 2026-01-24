@@ -82,7 +82,6 @@ npm run dev
 
 ## 🌐 Deploy
 
-🔗 Acesse a aplicação online:
-(adicione aqui o link do deploy depois)
+🔗 [Acesse a aplicação online](https://my-reading-topaz.vercel.app/)
 
 
