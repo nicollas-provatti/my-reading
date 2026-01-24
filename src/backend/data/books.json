@@ -113,24 +113,5 @@
     "startDate": "2024-12-01",
     "endDate": "2024-12-05",
     "assessment": 4
-  },
-  {
-    "cover": "https://m.media-amazon.com/images/I/A1z3nKtSH9L._SY342_.jpg",
-    "name": "Quatro Vidas de um Cachorro",
-    "author": "W. Bruce Cameron",
-    "genres": [
-      "Romance",
-      "Aventura"
-    ],
-    "pages": 288,
-    "summary": "bla bla bla",
-    "status": [
-      "Concluído",
-      "concluido"
-    ],
-    "startDate": "2026-01-01",
-    "endDate": "2026-01-22",
-    "assessment": 5,
-    "id": "01deed7e-9614-48bf-bc0c-9b7d29c49008"
   }
 ]

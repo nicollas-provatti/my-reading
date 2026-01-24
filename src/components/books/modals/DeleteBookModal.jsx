@@ -1,6 +1,8 @@
 import Modal from "../../UI/Modal";
+import { useBooks } from "../../../store/books/use-books";
 
 function DeleteBookModal({ bookName, onClose, onDelete }) {
+  const { isMutating } = useBooks();
   return (
     <Modal onClose={onClose}>
       {({ close }) => {
@@ -20,8 +22,9 @@ function DeleteBookModal({ bookName, onClose, onDelete }) {
               <button
                 className="bg-blue-100 text-black/80 p-2 rounded-lg cursor-pointer hover:bg-blue-200 transition-colors duration-200"
                 onClick={onDelete}
+                disabled={isMutating}
               >
-                Confirmar
+                {isMutating ? "Salvando..." : "Confirmar"}
               </button>
             </div>
           </>

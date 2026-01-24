@@ -1,34 +1,51 @@
 export function bookReducer(state, action) {
   switch (action.type) {
-    case "LOADING":
+    case "FETCH_START":
       return {
         ...state,
-        loading: true,
+        isFetching: true,
         error: null,
       };
-    case "ERROR":
-      return {
-        ...state,
-        loading: false,
-        error: action.payload,
-      };
-    case "SET_BOOKS":
+    case "FETCH_SUCCESS":
       return {
         ...state,
         books: action.payload,
-        loading: false,
+        isFetching: false,
+      };
+    case "FETCH_ERROR":
+      return {
+        ...state,
+        isFetching: false,
+        error: action.payload,
+      };
+    case "MUTATION_START":
+      return {
+        ...state,
+        isMutating: true,
+        error: null,
+      };
+    case "MUTATING_END":
+      return {
+        ...state,
+        isMutating: false,
+      };
+    case "MUTATION_ERROR":
+      return {
+        ...state,
+        isMutating: false,
+        error: action.payload,
       };
     case "ADD_BOOK":
       return {
         ...state,
         books: [...state.books, action.payload],
-        loading: false,
+        isMutating: false,
       };
     case "DELETE_BOOK":
       return {
         ...state,
         books: state.books.filter((book) => book.id !== action.payload),
-        loading: false,
+        isMutating: false,
       };
     case "EDIT_BOOK":
       return {
@@ -36,9 +53,8 @@ export function bookReducer(state, action) {
         books: state.books.map((book) =>
           book.id === action.payload.id ? action.payload : book,
         ),
-        loading: false,
+        isMutating: false,
       };
-
     default:
       return state;
   }

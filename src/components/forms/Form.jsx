@@ -31,6 +31,7 @@ function Form({ close, isEditMode }) {
   const { book } = isEditMode || {};
   const genres = book?.genres ?? [];
   const defaultRating = book?.assessment ?? 0;
+  const { isMutating } = useBooks();
 
   const { addBook, editBook } = useBooks();
   const [selectedGenres, setSelectedGenres] = useState(genres);
@@ -48,7 +49,7 @@ function Form({ close, isEditMode }) {
     setRating(rating);
   }
 
-  function handleSubmit(e, close) {
+  async function handleSubmit(e, close) {
     e.preventDefault();
 
     const status = e.target.status.value;
@@ -79,14 +80,20 @@ function Form({ close, isEditMode }) {
       assessment: Number(rating),
     };
 
-    if (isEditMode) {
-      bookData.id = book.id;
-      editBook(bookData);
-    } else {
-      addBook(bookData);
+    const success = isEditMode
+      ? await editBook(book.id, bookData)
+      : await addBook(bookData);
+
+    if (success) {
+      close();
     }
-    close();
   }
+
+  const buttonText = isMutating
+    ? "Salvando..."
+    : isEditMode
+      ? "Salvar"
+      : "Adicionar";
 
   return (
     <>
@@ -186,8 +193,11 @@ function Form({ close, isEditMode }) {
           >
             Cancelar
           </button>
-          <button className=" px-4 py-2 rounded-md bg-blue-500 text-white font-medium cursor-pointer hover:bg-blue-600 transition">
-            {isEditMode ? "Salvar" : "Adicionar"}
+          <button
+            className="px-4 py-2 rounded-md bg-blue-500 text-white font-medium cursor-pointer hover:bg-blue-600 transition"
+            disabled={isMutating}
+          >
+            {buttonText}
           </button>
         </div>
       </form>

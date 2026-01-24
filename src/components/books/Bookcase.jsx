@@ -1,11 +1,10 @@
 import { useBooks } from "../../store/books/use-books";
 import Book from "./Book";
 
-
 function Bookcase() {
-  const { books, loading, error } = useBooks();
+  const { books, isFetching, error } = useBooks();
 
-  if (loading) return <p className="text-center">Carregando...</p>;
+  if (isFetching) return <p className="text-center">Carregando...</p>;
   if (error) return <p className="text-center">{error}</p>
 
   return (
