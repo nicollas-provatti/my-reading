@@ -1,12 +1,17 @@
 import express from "express";
 import { getAllBooks, saveBooks } from "../services/bookService.js";
+import { authMiddleware } from "../middlewares/authMiddleware.js";
 
 const router = express.Router();
 
+router.use(authMiddleware);
+
 router.get("/", async (req, res) => {
   try {
+    const userId = req.userId;
     const books = await getAllBooks();
-    res.json(books);
+    const userBooks = books.filter((book) => book.userId === userId);
+    res.json(userBooks);
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: "Erro ao buscar livros" });
@@ -18,6 +23,7 @@ router.post("/", async (req, res) => {
     const newBook = {
       ...req.body,
       id: crypto.randomUUID(),
+      userId: req.userId,
     };
 
     const books = await getAllBooks();
@@ -35,11 +41,18 @@ router.post("/", async (req, res) => {
 router.delete("/:id", async (req, res) => {
   try {
     const { id } = req.params;
+    const userId = req.userId;
 
     const books = await getAllBooks();
-    const filteredBooks = books.filter((book) => book.id !== id);
+    const filteredBooks = books.filter(
+      (book) => !(book.id === id && book.userId === userId),
+    );
 
-    if (books.length === filteredBooks.length) {
+    const bookExists = books.some(
+      (book) => book.id === id && book.userId === userId,
+    );
+
+    if (!bookExists) {
       return res.status(404).json({ error: "Livro não encontrado" });
     }
 
@@ -56,10 +69,13 @@ router.put("/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const updatedBook = req.body;
+    const userId = req.userId;
 
     const books = await getAllBooks();
 
-    const bookIndex = books.findIndex((book) => book.id === id);
+    const bookIndex = books.findIndex(
+      (book) => book.id === id && book.userId === userId,
+    );
 
     if (bookIndex === -1) {
       return res.status(404).json({ error: "Livro não encontrado" });
@@ -68,6 +84,7 @@ router.put("/:id", async (req, res) => {
     books[bookIndex] = {
       ...updatedBook,
       id,
+      userId,
     };
 
     await saveBooks(books);
