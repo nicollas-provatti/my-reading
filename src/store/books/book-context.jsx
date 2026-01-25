@@ -1,6 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
 import { createContext, useEffect, useReducer } from "react";
-import * as bookApi from "../../services/bookApi.js";
+import * as bookService from "../../services/bookService.js";
 import { bookReducer } from "./book-reducer.jsx";
 
 export const BookContext = createContext({
@@ -25,7 +25,7 @@ function BookContextProvider({ children }) {
     async function loadBooks() {
       try {
         booksDispatch({ type: "FETCH_START" });
-        const books = await bookApi.getBooks();
+        const books = await bookService.getBooks();
         booksDispatch({ type: "FETCH_SUCCESS", payload: books });
       } catch (error) {
         booksDispatch({
@@ -42,7 +42,7 @@ function BookContextProvider({ children }) {
     booksDispatch({ type: "MUTATION_START" });
 
     try {
-      const newBook = await bookApi.addBook(book);
+      const newBook = await bookService.addBook(book);
       booksDispatch({ type: "ADD_BOOK", payload: newBook });
       return true;
     } catch (error) {
@@ -59,7 +59,7 @@ function BookContextProvider({ children }) {
   async function handleDeleteBook(id) {
     try {
       booksDispatch({ type: "MUTATION_START" });
-      await bookApi.deleteBook(id);
+      await bookService.deleteBook(id);
       booksDispatch({ type: "DELETE_BOOK", payload: id });
     } catch (error) {
       booksDispatch({
@@ -73,7 +73,7 @@ function BookContextProvider({ children }) {
     booksDispatch({ type: "MUTATION_START" });
 
     try {
-      const updatedBook = await bookApi.editBook(bookId, bookUpdate);
+      const updatedBook = await bookService.editBook(bookId, bookUpdate);
       booksDispatch({ type: "EDIT_BOOK", payload: updatedBook });
       return true;
     } catch (error) {
