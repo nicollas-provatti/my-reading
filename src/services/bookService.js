@@ -43,7 +43,7 @@ export async function addBook(book) {
 export async function deleteBook(id) {
   const token = getToken();
 
-  const response = await fetch(`${API_URL}/${id}`, {
+  const response = await fetch(`${API_URL}/books/${id}`, {
     method: "DELETE",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -60,7 +60,7 @@ export async function deleteBook(id) {
 export async function editBook(id, updatedBook) {
   const token = getToken();
 
-  const response = await fetch(`${API_URL}/${id}`, {
+  const response = await fetch(`${API_URL}/books/${id}`, {
     method: "PUT",
     headers: {
       Authorization: `Bearer ${token}`,

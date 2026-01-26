@@ -11,5 +11,5 @@ export function logout() {
 }
 
 export function isAuthenticated() {
-  return !!getToken(); // pesquisar
+  return !!getToken();
 }

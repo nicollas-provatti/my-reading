@@ -7,6 +7,7 @@ const API_URL = import.meta.env.VITE_API_URL;
 export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [passwordConfirm, setPasswordConfirm] = useState("");
   const { register } = useAuth();
   const navigate = useNavigate();
 
@@ -14,7 +15,7 @@ export default function Register() {
     e.preventDefault();
 
     try {
-      await register(email, password);
+      await register(email, password, passwordConfirm);
       alert("Conta criada com sucesso! Faça login.");
       navigate("/login");
     } catch (error) {
@@ -46,6 +47,14 @@ export default function Register() {
           required
           className="px-4 py-2 border rounded-lg"
           onChange={(e) => setPassword(e.target.value)}
+        />
+
+        <input
+          type="password"
+          placeholder="Confirme sua senha"
+          required
+          className="px-4 py-2 border rounded-lg"
+          onChange={(e) => setPasswordConfirm(e.target.value)}
         />
 
         <button

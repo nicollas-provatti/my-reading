@@ -18,5 +18,15 @@
     "id": "042bb870-74e9-4699-a9c1-b375b89ee46a",
     "email": "sara@hotmail.com",
     "password": "$2b$10$mUZ7Bt5puzd3pxwHyR71rOdsApmqe1RXY2Srouo.THhNqdPNOaB0m"
+  },
+  {
+    "id": "a62fc2df-dba9-45cf-8353-6a19fa027f5d",
+    "email": "wesly@gmail.com",
+    "password": "$2b$10$5Nf.zBg/Eaf49fvM4mxWAuKbD2i.QvYqvdylT0jiSosy9SyKZA2wO"
+  },
+  {
+    "id": "65da40eb-eee5-423c-8a1a-586917da832b",
+    "email": "lupinho@gmail.com",
+    "password": "$2b$10$7teDew1bJl0zP3PUnZC0FeaHtQMymAm5dHR6nKfQODpnaMUfDvANK"
   }
 ]

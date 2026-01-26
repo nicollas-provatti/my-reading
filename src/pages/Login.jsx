@@ -61,25 +61,3 @@ export default function Login() {
     </div>
   );
 }
-
-/*     
-    
-async function handleSubmit(e) {
-    e.preventDefault();
-
-    const response = await fetch(`${API_URL}/auth/login`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
-    });
-
-    if (!response.ok) {
-      alert("Credenciais inválidas");
-      return;
-    }
-
-    const data = await response.json(); 
-    login(data.token);
-    navigate("/");
-  }
-    */

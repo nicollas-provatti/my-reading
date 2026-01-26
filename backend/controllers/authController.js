@@ -7,15 +7,19 @@ import {
 } from "../services/userService.js";
 
 export async function register(req, res) {
-  const { email, password } = req.body;
+  const { email, password, passwordConfirm } = req.body;
 
-  if (!email || !password) {
+  if (!email || !password || !passwordConfirm) {
     return res.status(400).json({ message: "Email e senha são obrigatórios" });
   }
 
   const userExists = await findUserByEmail(email);
   if (userExists) {
     return res.status(409).json({ message: "Usuário já existe" });
+  }
+
+  if (password !== passwordConfirm) {
+    return res.status(400).json({ message: "As senhas não coincidem" });
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);
