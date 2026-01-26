@@ -32,14 +32,44 @@ function ReadingStatus() {
   const queue = books.filter((book) => book.status[1] === "fila");
   const next = books.filter((book) => book.status[1] === "proxima");
   const abandoned = books.filter((book) => book.status[1] === "abandonado");
+  const noBooks =
+    inProgress.length === 0 &&
+    next.length === 0 &&
+    queue.length === 0 &&
+    completed.length === 0 &&
+    abandoned.length === 0;
 
   return (
     <div className="flex flex-col gap-8 p-4">
-      <Card text="Em andamento" books={inProgress} property="andamento" />
-      <Card text="Próxima(s) leitura(s)" books={next} property="proxima" />
-      <Card text="Na fila" books={queue} property="fila" />
-      <Card text="Concluídos" books={completed} property="concluido" />
-      <Card text="Abandonados" books={abandoned} property="abandonado" />
+      {noBooks ? (
+        <p className="text-center">Você ainda não adicionou nenhum livro.</p>
+      ) : (
+        <>
+          {inProgress.length !== 0 && (
+            <Card text="Em andamento" books={inProgress} property="andamento" />
+          )}
+
+          {next.length !== 0 && (
+            <Card
+              text="Próxima(s) leitura(s)"
+              books={next}
+              property="proxima"
+            />
+          )}
+
+          {queue.length !== 0 && (
+            <Card text="Na fila" books={queue} property="fila" />
+          )}
+
+          {completed.length !== 0 && (
+            <Card text="Concluídos" books={completed} property="concluido" />
+          )}
+
+          {abandoned.length !== 0 && (
+            <Card text="Abandonados" books={abandoned} property="abandonado" />
+          )}
+        </>
+      )}
     </div>
   );
 }
