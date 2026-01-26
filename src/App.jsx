@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Header from "./components/Header";
 import Main from "./components/Main";
 import Footer from "./components/Footer";
@@ -12,14 +12,15 @@ function App() {
   return (
     <AuthContextProvider>
       <div className="min-h-screen flex flex-col">
-        
-
         <FilterContextProvider>
           <Routes>
             <Route path="/login" element={<Login />}></Route>
             <Route path="/register" element={<Register />} />
+
+            <Route path="/" element={<Navigate to="/login" replace />} />
+
             <Route
-              path="/"
+              path="/dashboard"
               element={
                 <PrivateRoute>
                   <Header />
