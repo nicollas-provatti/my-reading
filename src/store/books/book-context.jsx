@@ -2,6 +2,7 @@
 import { createContext, useEffect, useReducer } from "react";
 import * as bookService from "../../services/bookService.js";
 import { bookReducer } from "./book-reducer.jsx";
+import { useAuth } from "../auth/use-auth.jsx";
 
 export const BookContext = createContext({
   books: [],
@@ -21,7 +22,12 @@ function BookContextProvider({ children }) {
     error: null,
   });
 
+  const { isAuthenticated } = useAuth();
+
   useEffect(() => {
+
+    if (!isAuthenticated) return;
+
     async function loadBooks() {
       try {
         booksDispatch({ type: "FETCH_START" });
@@ -37,7 +43,7 @@ function BookContextProvider({ children }) {
     }
 
     loadBooks();
-  }, []);
+  }, [isAuthenticated]);
 
   async function handleAddBook(book) {
     booksDispatch({ type: "MUTATION_START" });
