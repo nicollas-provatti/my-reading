@@ -215,6 +215,6 @@ Para resolver o problema de persistência em produção, o projeto foi migrado p
 
 ## 🌐 Deploy
 
-🔗 [Acesse a aplicação online](https://my-reading-topaz.vercel.app/login)
+🔗 [Acesse a aplicação online](https://my-reading-topaz.vercel.app)
 
 
