@@ -1,5 +1,10 @@
 import express from "express";
-import { getAllBooks, saveBooks } from "../services/bookService.js";
+import {
+  getBooksByUser,
+  createBook,
+  updateBook,
+  deleteBook,
+} from "../services/bookService.js";
 import { authMiddleware } from "../middlewares/authMiddleware.js";
 
 const router = express.Router();
@@ -8,91 +13,57 @@ router.use(authMiddleware);
 
 router.get("/", async (req, res) => {
   try {
-    const userId = req.userId;
-    const books = await getAllBooks();
-    const userBooks = books.filter((book) => book.userId === userId);
-    res.json(userBooks);
+    const books = await getBooksByUser(req.userId);
+    res.json(books);
   } catch (error) {
     console.log(error);
-    res.status(500).json({ error: "Erro ao buscar livros" });
+    res.status(500).json({ message: "Erro ao buscar livros" });
   }
 });
 
 router.post("/", async (req, res) => {
   try {
-    const newBook = {
-      ...req.body,
-      id: crypto.randomUUID(),
-      userId: req.userId,
-    };
-
-    const books = await getAllBooks();
-    books.push(newBook);
-
-    await saveBooks(books);
-
-    res.status(201).json(newBook);
+    const book = await createBook(req.userId, req.body); 
+    console.log(book);
+    res.status(201).json(book);
   } catch (error) {
     console.log(error);
-    res.status(500).json({ error: "Erro ao salvar livro" });
+    res.status(500).json({ message: "Erro ao criar livro" });
   }
 });
 
 router.delete("/:id", async (req, res) => {
   try {
-    const { id } = req.params;
-    const userId = req.userId;
+    const result = await deleteBook(req.userId, req.params.id);
+    console.log(result);
 
-    const books = await getAllBooks();
-    const filteredBooks = books.filter(
-      (book) => !(book.id === id && book.userId === userId),
-    );
-
-    const bookExists = books.some(
-      (book) => book.id === id && book.userId === userId,
-    );
-
-    if (!bookExists) {
-      return res.status(404).json({ error: "Livro não encontrado" });
+    if (result.count === 0) {
+      return res.status(404).json({ message: "Livro não encontrado" });
     }
 
-    await saveBooks(filteredBooks);
-
-    res.status(204).send();
+    res.sendStatus(204);
   } catch (error) {
     console.log(error);
-    res.status(500).json({ error: "Erro ao deletar livro" });
+    res.status(500).json({ message: "Erro ao deletar livro" });
   }
 });
 
 router.put("/:id", async (req, res) => {
   try {
-    const { id } = req.params;
-    const updatedBook = req.body;
-    const userId = req.userId;
-
-    const books = await getAllBooks();
-
-    const bookIndex = books.findIndex(
-      (book) => book.id === id && book.userId === userId,
+    const result = await updateBook(
+      req.userId,
+      req.params.id,
+      req.body
     );
 
-    if (bookIndex === -1) {
-      return res.status(404).json({ error: "Livro não encontrado" });
+    if (result.count === 0) {
+      return res.status(404).json({ message: "Livro não encontrado" });
     }
 
-    books[bookIndex] = {
-      ...updatedBook,
-      id,
-      userId,
-    };
-
-    await saveBooks(books);
-
-    res.json(books[bookIndex]);
+    res.json(result);
   } catch (error) {
     console.log(error);
-    res.status(500).json({ error: "Erro ao editar livro" });
+    res.status(500).json({ message: "Erro ao atualizar livro" });
   }
 });
 

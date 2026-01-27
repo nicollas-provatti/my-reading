@@ -11,14 +11,14 @@ const statusStyles = {
 
 function formatDate(date) {
   if (!date) return "";
-  const [year, month, day] = date.split("-");
+  const [year, month, day] = date.split("T")[0].split("-");
   return `${day}/${month}/${year}`;
 }
 
 function BookDetailsModal({ book, onClose }) {
   const {
-    cover,
-    name,
+    coverUrl,
+    title,
     author,
     genres,
     pages,
@@ -26,8 +26,22 @@ function BookDetailsModal({ book, onClose }) {
     status,
     startDate,
     endDate,
-    assessment,
+    rating,
   } = book;
+
+  let porpertyStatusStyles = "";
+
+  if (status === "Em andamento") {
+    porpertyStatusStyles = "andamento";
+  } else if (status === "Concluído") {
+    porpertyStatusStyles = "concluido";
+  } else if (status === "Abandonado") {
+    porpertyStatusStyles = "abandonado";
+  } else if (status === "Próxima leitura") {
+    porpertyStatusStyles = "proxima";
+  } else if (status === "Na fila") {
+    porpertyStatusStyles = "fila";
+  }
 
   const formattedStartDate = formatDate(startDate);
   const formattedEndDate = formatDate(endDate);
@@ -49,16 +63,16 @@ function BookDetailsModal({ book, onClose }) {
             <div className="grid gap-6 md:grid-cols-[220px_1fr]">
               <div className="max-w-78 m-auto">
                 <img
-                  src={cover}
-                  alt={name}
+                  src={coverUrl}
+                  alt={title}
                   className="w-full rounded-md shadow-md"
                 />
               </div>
               <div className="flex flex-col gap-4">
                 <div className="flex items-center justify-between">
-                  <h1 className="text-2xl font-bold leading-tight">{name}</h1>
-                  {assessment !== null && assessment !== 0 && (
-                    <p>{"⭐".repeat(assessment)}</p>
+                  <h1 className="text-2xl font-bold leading-tight">{title}</h1>
+                  {rating !== null && rating !== 0 && (
+                    <p>{"⭐".repeat(rating)}</p>
                   )}
                 </div>
                 <p className="text-sm text-zinc-600">
@@ -67,10 +81,10 @@ function BookDetailsModal({ book, onClose }) {
                 <ul className="flex flex-wrap gap-2">
                   {genres.map((gender) => (
                     <li
-                      key={gender}
+                      key={gender.name}
                       className="px-3 py-1 rounded-full text-xs bg-zinc-100 text-zinc-700"
                     >
-                      {gender}
+                      {gender.name}
                     </li>
                   ))}
                 </ul>
@@ -78,15 +92,17 @@ function BookDetailsModal({ book, onClose }) {
                   <strong className="font-medium">{pages}</strong> páginas
                 </p>
                 <div className="border-t border-zinc-200 pt-4">
-                  <p className="text-sm leading-relaxed text-zinc-800 italic">
-                    “{summary}”
-                  </p>
+                  {summary && (
+                    <p className="text-sm leading-relaxed text-zinc-800 italic">
+                      “{summary}”
+                    </p>
+                  )}
                 </div>
                 <p>
                   <span
-                    className={`inline-block px-3 py-1 rounded-full text-xs font-semibold ${statusStyles[status[1]]}`}
+                    className={`inline-block px-3 py-1 rounded-full text-xs font-semibold ${statusStyles[porpertyStatusStyles]}`}
                   >
-                    {status[0]}
+                    {status}
                   </span>
                 </p>
                 <div className="flex flex-wrap gap-4 text-sm text-zinc-700">

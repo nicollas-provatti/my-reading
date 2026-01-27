@@ -18,10 +18,26 @@ function Book({ book, filter }) {
   const [isModalDetailsOpen, setIsModalDetailsOpen] = useState(false);
   const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false);
   const [isModalEditOpen, setIsModalEditOpen] = useState(false);
-  const { id, cover, name, author, genres, pages, status, assessment } = book;
+  const { id, coverUrl, title, author, genres, pages, status, rating } = book;
 
-  const classesStatus = statusStyles[status[1]];
-  const capaURL = cover ? cover : "/covers/placeholder.svg";
+  /* console.log(book); */
+
+  let porpertyStatusStyles = "";
+
+  if (status === "Em andamento") {
+    porpertyStatusStyles = "andamento";
+  } else if (status === "Concluído") {
+    porpertyStatusStyles = "concluido";
+  } else if (status === "Abandonado") {
+    porpertyStatusStyles = "abandonado";
+  } else if (status === "Próxima leitura") {
+    porpertyStatusStyles = "proxima";
+  } else if (status === "Na fila") {
+    porpertyStatusStyles = "fila";
+  }
+
+  const classesStatus = statusStyles[porpertyStatusStyles];
+  const cover = coverUrl ?? "/covers/placeholder.svg";
 
   function openModalDetails() {
     setIsModalDetailsOpen(true);
@@ -73,27 +89,27 @@ function Book({ book, filter }) {
 
         <div className="border-b border-gray-200 h-48">
           <img
-            src={capaURL}
-            alt="livro"
+            src={cover}
+            alt={title}
             className="w-full h-full object-contain"
           />
         </div>
         <div className="flex flex-col justify-between gap-3 p-4 flex-1">
-          <h2 className="font-semibold text-lg">{name}</h2>
+          <h2 className="font-semibold text-lg">{title}</h2>
           <h3 className="text-sm font-light">{author}</h3>
           <ul className="flex gap-2">
-            {genres.map((gender) => (
+            {genres.map((g) => (
               <li
-                key={gender}
+                key={g.name}
                 className="px-2 py-1 rounded-md text-xs text-zinc-800 bg-zinc-200"
               >
-                {gender}
+                {g.name}
               </li>
             ))}
           </ul>
-          <p className="text-sm font-light">{pages} páginas</p>
-          {assessment !== null && assessment !== 0 && (
-            <p className="text-sm">{"⭐".repeat(assessment)}</p>
+          {pages && <p className="text-sm font-light">{pages} páginas</p>}
+          {rating !== null && rating !== 0 && (
+            <p className="text-sm">{"⭐".repeat(rating)}</p>
           )}
           {filter && (
             <p
@@ -101,7 +117,7 @@ function Book({ book, filter }) {
                 "self-start px-2 py-1 rounded-md text-sm " + classesStatus
               }
             >
-              {status[0]}
+              {status}
             </p>
           )}
         </div>

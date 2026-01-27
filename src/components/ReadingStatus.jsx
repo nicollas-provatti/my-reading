@@ -27,11 +27,12 @@ function Card({ text, books, property }) {
 function ReadingStatus() {
   const { books } = useBooks();
 
-  const completed = books.filter((book) => book.status[1] === "concluido");
-  const inProgress = books.filter((book) => book.status[1] === "andamento");
-  const queue = books.filter((book) => book.status[1] === "fila");
-  const next = books.filter((book) => book.status[1] === "proxima");
-  const abandoned = books.filter((book) => book.status[1] === "abandonado");
+  const completed = books.filter((book) => book.status === "Concluído");
+  const inProgress = books.filter((book) => book.status === "Em andamento");
+  const queue = books.filter((book) => book.status === "Na fila");
+  const next = books.filter((book) => book.status === "Próxima");
+  const abandoned = books.filter((book) => book.status === "Abandonado");
+
   const noBooks =
     inProgress.length === 0 &&
     next.length === 0 &&

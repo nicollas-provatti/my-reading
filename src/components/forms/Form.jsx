@@ -15,7 +15,8 @@ function Select({ book }) {
       <select
         name="status"
         id="status"
-        defaultValue={`${book?.status[0]}`}
+        required
+        defaultValue={`${book?.status}`}
         className="border border-zinc-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-300 transition"
       >
         <option value="Em andamento">Em andamento</option>
@@ -28,21 +29,28 @@ function Select({ book }) {
   );
 }
 
+function toInputDate(date) {
+  if (!date) return "";
+  return date.split("T")[0];
+}
+
 function Form({ close, isEditMode }) {
   const { book } = isEditMode || {};
-  const genres = book?.genres ?? [];
-  const defaultRating = book?.assessment ?? 0;
+  /* const genres = book?.genres ?? []; */
+  const defaultRating = book?.rating ?? 0;
   const { isMutating } = useBooks();
 
   const { addBook, editBook } = useBooks();
-  const [selectedGenres, setSelectedGenres] = useState(genres);
+  const [selectedGenres, setSelectedGenres] = useState(
+    book?.genres?.map((g) => g.name) ?? [],
+  );
   const [rating, setRating] = useState(defaultRating);
 
   function handleGenreChange(e) {
-    const value = e.target.value;
+    const { value, checked } = e.target;
 
     setSelectedGenres((prev) =>
-      prev.includes(value) ? prev.filter((g) => g !== value) : [...prev, value],
+      checked ? [...prev, value] : prev.filter((g) => g !== value),
     );
   }
 
@@ -54,31 +62,24 @@ function Form({ close, isEditMode }) {
     e.preventDefault();
 
     const status = e.target.status.value;
-    let statusFormatted = "";
-
-    if (status === "Em andamento") {
-      statusFormatted = "andamento";
-    } else if (status === "Concluído") {
-      statusFormatted = "concluido";
-    } else if (status === "Abandonado") {
-      statusFormatted = "abandonado";
-    } else if (status === "Próxima leitura") {
-      statusFormatted = "proxima";
-    } else if (status === "Na fila") {
-      statusFormatted = "fila";
-    }
 
     const bookData = {
-      cover: e.target.coverURL.value,
-      name: e.target.nameBook.value,
+      title: e.target.nameBook.value,
       author: e.target.author.value,
+      status,
+      rating,
+      pages: e.target.numberPages.value
+        ? Number(e.target.numberPages.value)
+        : null,
       genres: selectedGenres,
-      pages: Number(e.target.numberPages.value),
-      summary: e.target.summary.value,
-      status: [status, statusFormatted],
-      startDate: e.target.startReading.value,
-      endDate: e.target.endReading.value,
-      assessment: Number(rating),
+      coverUrl: e.target.coverURL.value || null,
+      summary: e.target.summary.value || null,
+      startDate: e.target.startReading.value
+        ? new Date(e.target.startReading.value).toISOString()
+        : null,
+      endDate: e.target.endReading.value
+        ? new Date(e.target.endReading.value).toISOString()
+        : null,
     };
 
     const success = isEditMode
@@ -110,7 +111,7 @@ function Form({ close, isEditMode }) {
           id="coverURL"
           type="text"
           name="coverURL"
-          defaultValue={`${isEditMode ? book.cover : ""}`}
+          defaultValue={`${isEditMode ? book.coverUrl : ""}`}
           placeholder="Informe o URL da imagem"
         />
 
@@ -119,7 +120,8 @@ function Form({ close, isEditMode }) {
           id="nameBook"
           type="text"
           name="nameBook"
-          defaultValue={`${isEditMode ? book.name : ""}`}
+          required
+          defaultValue={`${isEditMode ? book.title : ""}`}
           placeholder="Informe o nome do livro"
         />
 
@@ -129,6 +131,7 @@ function Form({ close, isEditMode }) {
             id="author"
             type="text"
             name="author"
+            required
             defaultValue={`${isEditMode ? book.author : ""}`}
             placeholder="Informe o nome do autor"
           />
@@ -138,20 +141,24 @@ function Form({ close, isEditMode }) {
             id="numberPages"
             type="number"
             name="numberPages"
+            required
             defaultValue={`${isEditMode ? book.pages : ""}`}
             placeholder="Informe o número de páginas"
             min="0"
           />
         </div>
 
-        <MultipleSelectInput book={book} onChange={handleGenreChange} />
+        <MultipleSelectInput
+          selectedGenres={selectedGenres}
+          onChange={handleGenreChange}
+        />
 
         <Input
           label="Resumo"
           id="summary"
           textarea
           name="summary"
-          defaultValue={`${isEditMode ? book.summary : ""}`}
+          defaultValue={`${isEditMode ? book.summary ?? "" : ""}`}
           placeholder="Informe o resumo"
           cols="32"
         />
@@ -167,7 +174,7 @@ function Form({ close, isEditMode }) {
             label="Início da leitura"
             id="startReading"
             type="date"
-            defaultValue={`${isEditMode ? book.startDate : ""}`}
+            defaultValue={isEditMode ? toInputDate(book.startDate) : ""}
             name="startReading"
           />
 
@@ -175,7 +182,7 @@ function Form({ close, isEditMode }) {
             label="Fim da leitura"
             id="endReading"
             type="date"
-            defaultValue={`${isEditMode ? book.endDate : ""}`}
+            defaultValue={isEditMode ? toInputDate(book.endDate) : ""}
             name="endReading"
           />
         </div>

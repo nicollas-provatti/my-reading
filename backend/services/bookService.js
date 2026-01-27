@@ -1,14 +1,56 @@
-import { readFile, writeFile } from "fs/promises";
-import path from "path";
+import prisma from "../lib/prisma.js";
 
-const dataPath = path.resolve("data/books.json");
-
-export async function getAllBooks() {
-  await new Promise(resolve => setTimeout(resolve, 1000));
-  const data = await readFile(dataPath, "utf-8");
-  return JSON.parse(data);
+export async function getBooksByUser(userId) {
+  return prisma.book.findMany({
+    where: { userId },
+    orderBy: {
+      createdAt: "desc",
+    },
+    include: {
+      genres: true,
+    },
+  });
 }
 
-export async function saveBooks(books) {
-  await writeFile(dataPath, JSON.stringify(books, null, 2));
+export async function createBook(userId, data) {
+  return prisma.book.create({
+    data: {
+      ...data,
+      userId,
+      genres: {
+        create: data.genres.map((name) => ({ name })),
+      },
+    },
+    include: {
+      genres: true,
+    },
+  });
+}
+
+export async function updateBook(userId, bookId, data) {
+  return prisma.book.update({
+    where: {
+      id: bookId,
+      userId,
+    },
+    data: {
+      ...data,
+      genres: {
+        deleteMany: {},
+        create: data.genres.filter(Boolean).map((genre) => ({ name: genre })),
+      },
+    },
+    include: {
+      genres: true,
+    },
+  });
+}
+
+export async function deleteBook(userId, bookId) {
+  return prisma.book.deleteMany({
+    where: {
+      id: bookId,
+      userId,
+    },
+  });
 }

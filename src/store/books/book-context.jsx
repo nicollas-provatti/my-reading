@@ -28,6 +28,7 @@ function BookContextProvider({ children }) {
         const books = await bookService.getBooks();
         booksDispatch({ type: "FETCH_SUCCESS", payload: books });
       } catch (error) {
+        console.log(error);
         booksDispatch({
           type: "FETCH_ERROR",
           payload: "Erro ao carregar livros",
@@ -46,6 +47,7 @@ function BookContextProvider({ children }) {
       booksDispatch({ type: "ADD_BOOK", payload: newBook });
       return true;
     } catch (error) {
+      console.log(error);
       booksDispatch({
         type: "MUTATION_ERROR",
         payload: "Erro ao adicionar livro",
@@ -57,11 +59,13 @@ function BookContextProvider({ children }) {
   }
 
   async function handleDeleteBook(id) {
+    booksDispatch({ type: "MUTATION_START" });
+
     try {
-      booksDispatch({ type: "MUTATION_START" });
       await bookService.deleteBook(id);
       booksDispatch({ type: "DELETE_BOOK", payload: id });
     } catch (error) {
+      console.log(error);
       booksDispatch({
         type: "MUTATION_ERROR",
         payload: "Erro ao remover livro",
@@ -71,12 +75,13 @@ function BookContextProvider({ children }) {
 
   async function handleEditBook(bookId, bookUpdate) {
     booksDispatch({ type: "MUTATION_START" });
-
+    
     try {
       const updatedBook = await bookService.editBook(bookId, bookUpdate);
       booksDispatch({ type: "EDIT_BOOK", payload: updatedBook });
       return true;
     } catch (error) {
+      console.log(error);
       booksDispatch({
         type: "MUTATION_ERROR",
         payload: "Erro ao editar livro",

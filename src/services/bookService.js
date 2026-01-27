@@ -74,5 +74,6 @@ export async function editBook(id, updatedBook) {
   }
 
   if (!response.ok) throw new Error("Erro ao editar livro");
+  
   return response.json();
 }
