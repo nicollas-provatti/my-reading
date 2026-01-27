@@ -22,11 +22,11 @@ function BookContextProvider({ children }) {
     error: null,
   });
 
-  const { isAuthenticated } = useAuth();
+  const { token } = useAuth();
 
   useEffect(() => {
 
-    if (!isAuthenticated) return;
+    if (!token) return;
 
     async function loadBooks() {
       try {
@@ -43,7 +43,7 @@ function BookContextProvider({ children }) {
     }
 
     loadBooks();
-  }, [isAuthenticated]);
+  }, [token]);
 
   async function handleAddBook(book) {
     booksDispatch({ type: "MUTATION_START" });

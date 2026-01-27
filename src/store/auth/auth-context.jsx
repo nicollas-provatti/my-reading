@@ -3,6 +3,7 @@ import { createContext, useState } from "react";
 import * as authService from "../../services/authService";
 
 export const AuthContext = createContext({
+  token: "",
   login: async () => {},
   logout: () => {},
   register: async () => {},
@@ -32,6 +33,7 @@ export function AuthContextProvider({ children }) {
   const isAuthenticated = !!token;
 
   const ctxValue = {
+    token,
     login: handleLogin,
     logout: handleLogout,
     register: handleRegister,
