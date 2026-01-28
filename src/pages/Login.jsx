@@ -1,12 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useAuth } from "../store/auth/use-auth";
 import { useNavigate, Link } from "react-router-dom";
 import ButtonSpinner from "../components/UI/ButtonSpinner";
 import AuthErrorMessage from "../components/UI/AuthErrorMessage";
 
 export default function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const emailRef = useRef(null);
+  const passwordRef = useRef(null);
   const { login, isAuthenticating, authError, clearAuthError } = useAuth();
   const navigate = useNavigate();
 
@@ -17,6 +17,10 @@ export default function Login() {
   async function handleSubmit(e) {
     try {
       e.preventDefault();
+
+      const email = emailRef.current.value;
+      const password = passwordRef.current.value;
+      
       await login(email, password);
       navigate("/dashboard");
     } catch {}
@@ -39,8 +43,7 @@ export default function Login() {
             autoComplete="username"
             className="w-full px-4 py-2 border rounded-lg outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             required
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            ref={emailRef}
           />
 
           {authError?.field === "email" && (
@@ -55,8 +58,7 @@ export default function Login() {
             autoComplete="current-password"
             className="w-full px-4 py-2 border rounded-lg outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             required
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            ref={passwordRef}
           />
 
           {authError?.field === "password" && (
