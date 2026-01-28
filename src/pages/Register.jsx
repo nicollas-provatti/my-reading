@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../store/auth/use-auth";
 import ButtonSpinner from "../components/UI/ButtonSpinner";
+import AuthErrorMessage from "../components/UI/AuthErrorMessage";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -9,19 +10,20 @@ export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
-  const { register, isAuthenticating } = useAuth();
+  const { register, isAuthenticating, authError, clearAuthError } = useAuth();
   const navigate = useNavigate();
 
-  async function handleSubmit(e) {
-    e.preventDefault();
+  useEffect(() => {
+    clearAuthError();
+  }, []);
 
+  async function handleSubmit(e) {
     try {
+      e.preventDefault();
       await register(email, password, passwordConfirm);
       alert("Conta criada com sucesso! Faça login.");
       navigate("/login");
-    } catch (error) {
-      alert(error.message);
-    }
+    } catch {}
   }
 
   return (
@@ -34,36 +36,49 @@ export default function Register() {
           Criar conta
         </h1>
 
-        <input
-          type="email"
-          placeholder="Email"
-          required
-          autoComplete="username"
-          className="px-4 py-2 border rounded-lg"
-          onChange={(e) => setEmail(e.target.value)}
-        />
+        <div>
+          <input
+            type="email"
+            placeholder="Email"
+            required
+            autoComplete="username"
+            className="w-full px-4 py-2 border rounded-lg"
+            onChange={(e) => setEmail(e.target.value)}
+          />
 
-        <input
-          type="password"
-          placeholder="Senha"
-          required
-          autoComplete="username"
-          className="px-4 py-2 border rounded-lg"
-          onChange={(e) => setPassword(e.target.value)}
-        />
+          {authError?.field === "email" && (
+            <AuthErrorMessage text={authError.message} />
+          )}
+        </div>
 
-        <input
-          type="password"
-          placeholder="Confirme sua senha"
-          required
-          autoComplete="current-password"
-          className="px-4 py-2 border rounded-lg"
-          onChange={(e) => setPasswordConfirm(e.target.value)}
-        />
+        <div>
+          <input
+            type="password"
+            placeholder="Senha"
+            required
+            autoComplete="username"
+            className="mb-4 w-full px-4 py-2 border rounded-lg"
+            onChange={(e) => setPassword(e.target.value)}
+          />
+
+          <input
+            type="password"
+            placeholder="Confirme sua senha"
+            required
+            autoComplete="current-password"
+            className="w-full px-4 py-2 border rounded-lg"
+            onChange={(e) => setPasswordConfirm(e.target.value)}
+          />
+
+          {authError?.field === "password" && (
+            <AuthErrorMessage text={authError.message} />
+          )}
+        </div>
 
         <button
           type="submit"
-          className="flex justify-center items-center gap-3 mt-2 bg-green-600 text-white py-2 rounded-lg font-medium cursor-pointer hover:bg-green-700 transition-colors disabled:opacity-60"
+          disabled={isAuthenticating}
+          className="flex justify-center items-center gap-3 bg-green-600 text-white py-2 rounded-lg font-medium cursor-pointer hover:bg-green-700 transition-colors disabled:opacity-60"
         >
           {isAuthenticating ? (
             <>

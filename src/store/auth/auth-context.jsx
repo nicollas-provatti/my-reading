@@ -10,6 +10,7 @@ export const AuthContext = createContext({
   isAuthenticated: false,
   isAuthenticating: false,
   authError: null,
+  clearAuthError: () => {},
 });
 
 export function AuthContextProvider({ children }) {
@@ -28,7 +29,11 @@ export function AuthContextProvider({ children }) {
       localStorage.setItem("token", data.token);
       setToken(data.token);
     } catch (error) {
-      setAuthError(error.message || "Erro ao fazer login");
+      setAuthError({
+        field: error.field || "form",
+        message: error.message || "Erro ao fazer login",
+      });
+      throw error;
     } finally {
       setIsAuthenticating(false);
     }
@@ -41,7 +46,11 @@ export function AuthContextProvider({ children }) {
 
       await authService.register(email, password, passwordConfirm);
     } catch (error) {
-      setAuthError(error.message || "Erro ao criar conta");
+      setAuthError({
+        field: error.field || "form",
+        message: error.message || "Erro ao criar conta",
+      });
+      throw error;
     } finally {
       setIsAuthenticating(false);
     }
@@ -50,6 +59,10 @@ export function AuthContextProvider({ children }) {
   function handleLogout() {
     localStorage.removeItem("token");
     setToken(null);
+  }
+
+  function handleClearAuthError() {
+    setAuthError(null);
   }
 
   const isAuthenticated = !!token;
@@ -62,6 +75,7 @@ export function AuthContextProvider({ children }) {
     isAuthenticated,
     isAuthenticating,
     authError,
+    clearAuthError: handleClearAuthError,
   };
 
   return (

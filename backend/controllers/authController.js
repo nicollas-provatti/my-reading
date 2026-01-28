@@ -14,15 +14,21 @@ export async function register(req, res) {
 
     const userExists = await findUserByEmail(email);
     if (userExists) {
-      return res.status(409).json({ message: "Usuário já existe" });
+      return res
+        .status(409)
+        .json({ field: "email", message: "Usuário já existe" });
     }
 
     if (password.length < 6) {
-      return res.status(400).json({ message: "Senha muito curta" });
+      return res
+        .status(400)
+        .json({ field: "password", message: "Senha muito curta" });
     }
 
     if (password !== passwordConfirm) {
-      return res.status(400).json({ message: "As senhas não coincidem" });
+      return res
+        .status(400)
+        .json({ field: "password", message: "As senhas não coincidem" });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -34,7 +40,6 @@ export async function register(req, res) {
 
     return res.status(201).json({ message: "Usuário criado com sucesso" });
   } catch (error) {
-    console.log(error);
     return res.status(500).json({ message: "Erro interno do servidor" });
   }
 }
@@ -52,13 +57,17 @@ export async function login(req, res) {
     const user = await findUserByEmail(email);
 
     if (!user) {
-      return res.status(401).json({ message: "Credenciais inválidas" });
+      return res
+        .status(401)
+        .json({ field: "email", message: "Email inválido" });
     }
 
     const passwordMatch = await bcrypt.compare(password, user.password);
 
     if (!passwordMatch) {
-      return res.status(401).json({ message: "Credenciais inválidas" });
+      return res
+        .status(401)
+        .json({ field: "password", message: "Senha inválida" });
     }
 
     const token = generateToken({ userId: user.id });

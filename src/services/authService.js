@@ -9,8 +9,7 @@ export async function login(email, password) {
 
   if (!response.ok) {
     const error = await response.json().catch(() => null);
-
-    throw new Error(error?.message || "Credenciais inválidas");
+    throw error;
   }
 
   return response.json();
@@ -27,8 +26,7 @@ export async function register(email, password, passwordConfirm) {
 
   if (!response.ok) {
     const error = await response.json().catch(() => null);
-
-    throw new Error(error?.message || "Erro ao criar a conta");
+    throw error;
   }
 
   return response.json();
