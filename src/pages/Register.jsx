@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../store/auth/use-auth";
+import ButtonSpinner from "../components/UI/ButtonSpinner";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -8,7 +9,7 @@ export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
-  const { register } = useAuth();
+  const { register, isAuthenticating } = useAuth();
   const navigate = useNavigate();
 
   async function handleSubmit(e) {
@@ -37,6 +38,7 @@ export default function Register() {
           type="email"
           placeholder="Email"
           required
+          autoComplete="username"
           className="px-4 py-2 border rounded-lg"
           onChange={(e) => setEmail(e.target.value)}
         />
@@ -45,6 +47,7 @@ export default function Register() {
           type="password"
           placeholder="Senha"
           required
+          autoComplete="username"
           className="px-4 py-2 border rounded-lg"
           onChange={(e) => setPassword(e.target.value)}
         />
@@ -53,15 +56,23 @@ export default function Register() {
           type="password"
           placeholder="Confirme sua senha"
           required
+          autoComplete="current-password"
           className="px-4 py-2 border rounded-lg"
           onChange={(e) => setPasswordConfirm(e.target.value)}
         />
 
         <button
           type="submit"
-          className="mt-2 bg-green-600 text-white py-2 rounded-lg font-medium cursor-pointer hover:bg-green-700 transition-colors"
+          className="flex justify-center items-center gap-3 mt-2 bg-green-600 text-white py-2 rounded-lg font-medium cursor-pointer hover:bg-green-700 transition-colors"
         >
-          Criar conta
+          {isAuthenticating ? (
+            <>
+              <ButtonSpinner />
+              Criando conta...
+            </>
+          ) : (
+            "Criar conta"
+          )}
         </button>
 
         <p className="text-sm text-center text-zinc-600">

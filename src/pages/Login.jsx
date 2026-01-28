@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { useAuth } from "../store/auth/use-auth";
 import { useNavigate, Link } from "react-router-dom";
+import ButtonSpinner from "../components/UI/ButtonSpinner";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { login } = useAuth();
+  const { login, isAuthenticating } = useAuth();
   const navigate = useNavigate();
 
   async function handleSubmit(e) {
@@ -32,6 +33,7 @@ export default function Login() {
         <input
           type="email"
           placeholder="Email"
+          autoComplete="username"
           className="px-4 py-2 border rounded-lg outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
           required
           onChange={(e) => setEmail(e.target.value)}
@@ -40,6 +42,7 @@ export default function Login() {
         <input
           type="password"
           placeholder="Senha"
+          autoComplete="current-password"
           className="px-4 py-2 border rounded-lg outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
           required
           onChange={(e) => setPassword(e.target.value)}
@@ -47,9 +50,17 @@ export default function Login() {
 
         <button
           type="submit"
-          className="mt-2 bg-blue-600 text-white py-2 rounded-lg font-medium cursor-pointer hover:bg-blue-700 transition-colors"
+          disabled={isAuthenticating}
+          className="flex justify-center items-center gap-3 mt-2 bg-blue-600 text-white py-2 rounded-lg font-medium cursor-pointer hover:bg-blue-700 transition-colors"
         >
-          Entrar
+          {isAuthenticating ? (
+            <>
+              <ButtonSpinner />
+              Entrando...
+            </>
+          ) : (
+            "Entrar"
+          )}
         </button>
         <p className="text-sm text-center text-zinc-600">
           Ainda não tem conta?{" "}
