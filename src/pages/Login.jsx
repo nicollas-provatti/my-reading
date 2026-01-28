@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useAuth } from "../store/auth/use-auth";
 import { useNavigate, Link } from "react-router-dom";
 import ButtonSpinner from "../components/UI/ButtonSpinner";
@@ -20,7 +20,7 @@ export default function Login() {
 
       const email = emailRef.current.value;
       const password = passwordRef.current.value;
-      
+
       await login(email, password);
       navigate("/dashboard");
     } catch {}

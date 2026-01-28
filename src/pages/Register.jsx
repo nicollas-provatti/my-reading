@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../store/auth/use-auth";
 import ButtonSpinner from "../components/UI/ButtonSpinner";
@@ -7,9 +7,9 @@ import AuthErrorMessage from "../components/UI/AuthErrorMessage";
 const API_URL = import.meta.env.VITE_API_URL;
 
 export default function Register() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [passwordConfirm, setPasswordConfirm] = useState("");
+  const emailRef = useRef(null);
+  const passwordRef = useRef(null);
+  const passwordConfirmRef = useRef(null);
   const { register, isAuthenticating, authError, clearAuthError } = useAuth();
   const navigate = useNavigate();
 
@@ -20,6 +20,10 @@ export default function Register() {
   async function handleSubmit(e) {
     try {
       e.preventDefault();
+      const email = emailRef.current.value;
+      const password = passwordRef.current.value;
+      const passwordConfirm = passwordConfirmRef.current.value;
+      
       await register(email, password, passwordConfirm);
       alert("Conta criada com sucesso! Faça login.");
       navigate("/login");
@@ -43,7 +47,7 @@ export default function Register() {
             required
             autoComplete="username"
             className="w-full px-4 py-2 border rounded-lg"
-            onChange={(e) => setEmail(e.target.value)}
+            ref={emailRef}
           />
 
           {authError?.field === "email" && (
@@ -58,7 +62,7 @@ export default function Register() {
             required
             autoComplete="username"
             className="mb-4 w-full px-4 py-2 border rounded-lg"
-            onChange={(e) => setPassword(e.target.value)}
+            ref={passwordRef}
           />
 
           <input
@@ -67,7 +71,7 @@ export default function Register() {
             required
             autoComplete="current-password"
             className="w-full px-4 py-2 border rounded-lg"
-            onChange={(e) => setPasswordConfirm(e.target.value)}
+            ref={passwordConfirmRef}
           />
 
           {authError?.field === "password" && (
