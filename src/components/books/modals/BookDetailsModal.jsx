@@ -1,14 +1,7 @@
 import { IoMdClose } from "react-icons/io";
 import Modal from "../../UI/Modal";
 import ImageWithFallback from "../../UI/ImageWithFallback";
-
-const statusStyles = {
-  concluido: "text-green-950 bg-green-100",
-  andamento: "text-indigo-950 bg-indigo-100",
-  fila: "text-amber-950 bg-amber-100",
-  proxima: "text-blue-950 bg-blue-100",
-  abandonado: "text-red-950 bg-red-100",
-};
+import { STATUS_STYLES } from "../../../utils/statusStyles";
 
 function formatDate(date) {
   if (!date) return "";
@@ -30,20 +23,7 @@ function BookDetailsModal({ book, onClose }) {
     rating,
   } = book;
 
-  let porpertyStatusStyles = "";
-
-  if (status === "Em andamento") {
-    porpertyStatusStyles = "andamento";
-  } else if (status === "Concluído") {
-    porpertyStatusStyles = "concluido";
-  } else if (status === "Abandonado") {
-    porpertyStatusStyles = "abandonado";
-  } else if (status === "Próxima leitura") {
-    porpertyStatusStyles = "proxima";
-  } else if (status === "Na fila") {
-    porpertyStatusStyles = "fila";
-  }
-
+  const statusClasses = STATUS_STYLES[status] ?? "text-zinc-800 bg-zinc-100";
   const formattedStartDate = formatDate(startDate);
   const formattedEndDate = formatDate(endDate);
 
@@ -101,7 +81,7 @@ function BookDetailsModal({ book, onClose }) {
                 </div>
                 <p>
                   <span
-                    className={`inline-block px-3 py-1 rounded-full text-xs font-semibold ${statusStyles[porpertyStatusStyles]}`}
+                    className={`inline-block px-3 py-1 rounded-full text-xs font-semibold ${statusClasses}`}
                   >
                     {status}
                   </span>

@@ -1,16 +1,9 @@
 import { useBooks } from "../store/books/use-books";
 import Book from "./books/Book";
+import { STATUS_STYLES } from "../utils/statusStyles";
 
-const statusColors = {
-  concluido: "text-green-950 bg-green-100",
-  andamento: "text-indigo-950 bg-indigo-100",
-  fila: "text-amber-950 bg-amber-100",
-  proxima: "text-blue-950 bg-blue-100",
-  abandonado: "text-red-950 bg-red-100",
-};
-
-function Card({ text, books, property }) {
-  const titleClasses = "self-start px-2 rounded-md " + statusColors[property];
+function Card({ text, books, status }) {
+  const titleClasses = `self-start px-2 rounded-md ${STATUS_STYLES[status]}`;
 
   return (
     <div className="flex flex-col gap-4 pb-8 border-b border-gray-200 last:border-b-0">
@@ -47,27 +40,31 @@ function ReadingStatus() {
       ) : (
         <>
           {inProgress.length !== 0 && (
-            <Card text="Em andamento" books={inProgress} property="andamento" />
+            <Card
+              text="Em andamento"
+              books={inProgress}
+              status="Em andamento"
+            />
           )}
 
           {next.length !== 0 && (
             <Card
               text="Próxima(s) leitura(s)"
               books={next}
-              property="proxima"
+              status="Próxima leitura"
             />
           )}
 
           {queue.length !== 0 && (
-            <Card text="Na fila" books={queue} property="fila" />
+            <Card text="Na fila" books={queue} status="Na fila" />
           )}
 
           {completed.length !== 0 && (
-            <Card text="Concluídos" books={completed} property="concluido" />
+            <Card text="Concluídos" books={completed} status="Conluído" />
           )}
 
           {abandoned.length !== 0 && (
-            <Card text="Abandonados" books={abandoned} property="abandonado" />
+            <Card text="Abandonado(s)" books={abandoned} status="Abandonado" />
           )}
         </>
       )}
