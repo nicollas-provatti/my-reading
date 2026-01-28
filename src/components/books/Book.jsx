@@ -4,6 +4,7 @@ import BookDetails from "./modals/BookDetailsModal";
 import { CiEdit, CiTrash } from "react-icons/ci";
 import EditBookModal from "./modals/EditBookModal";
 import DeleteBookModal from "./modals/DeleteBookModal";
+import ImageWithFallback from "../UI/ImageWithFallback";
 
 const statusStyles = {
   concluido: "text-green-950 bg-green-100",
@@ -20,8 +21,6 @@ function Book({ book, filter }) {
   const [isModalEditOpen, setIsModalEditOpen] = useState(false);
   const { id, coverUrl, title, author, genres, pages, status, rating } = book;
 
-  /* console.log(book); */
-
   let porpertyStatusStyles = "";
 
   if (status === "Em andamento") {
@@ -37,7 +36,6 @@ function Book({ book, filter }) {
   }
 
   const classesStatus = statusStyles[porpertyStatusStyles];
-  const cover = coverUrl ?? "/covers/placeholder.svg";
 
   function openModalDetails() {
     setIsModalDetailsOpen(true);
@@ -88,9 +86,9 @@ function Book({ book, filter }) {
         </div>
 
         <div className="border-b border-gray-200 h-48">
-          <img
-            src={cover}
-            alt={title}
+          <ImageWithFallback
+            src={coverUrl}
+            alt={`Capa do livro ${title}`}
             className="w-full h-full object-contain"
           />
         </div>

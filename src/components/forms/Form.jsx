@@ -36,7 +36,6 @@ function toInputDate(date) {
 
 function Form({ close, isEditMode }) {
   const { book } = isEditMode || {};
-  /* const genres = book?.genres ?? []; */
   const defaultRating = book?.rating ?? 0;
   const { isMutating } = useBooks();
 

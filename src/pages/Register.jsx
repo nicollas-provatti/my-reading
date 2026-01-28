@@ -63,7 +63,7 @@ export default function Register() {
 
         <button
           type="submit"
-          className="flex justify-center items-center gap-3 mt-2 bg-green-600 text-white py-2 rounded-lg font-medium cursor-pointer hover:bg-green-700 transition-colors"
+          className="flex justify-center items-center gap-3 mt-2 bg-green-600 text-white py-2 rounded-lg font-medium cursor-pointer hover:bg-green-700 transition-colors disabled:opacity-60"
         >
           {isAuthenticating ? (
             <>

@@ -1,5 +1,6 @@
 import { IoMdClose } from "react-icons/io";
 import Modal from "../../UI/Modal";
+import ImageWithFallback from "../../UI/ImageWithFallback";
 
 const statusStyles = {
   concluido: "text-green-950 bg-green-100",
@@ -62,9 +63,9 @@ function BookDetailsModal({ book, onClose }) {
             </div>
             <div className="grid gap-6 md:grid-cols-[220px_1fr]">
               <div className="max-w-78 m-auto">
-                <img
+                <ImageWithFallback 
                   src={coverUrl}
-                  alt={title}
+                  alt={`Capa do livro ${title}`}
                   className="w-full rounded-md shadow-md"
                 />
               </div>

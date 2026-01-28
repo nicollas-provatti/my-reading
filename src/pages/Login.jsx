@@ -51,7 +51,7 @@ export default function Login() {
         <button
           type="submit"
           disabled={isAuthenticating}
-          className="flex justify-center items-center gap-3 mt-2 bg-blue-600 text-white py-2 rounded-lg font-medium cursor-pointer hover:bg-blue-700 transition-colors"
+          className="flex justify-center items-center gap-3 mt-2 bg-blue-600 text-white py-2 rounded-lg font-medium cursor-pointer hover:bg-blue-700 transition-colors disabled:opacity-60"
         >
           {isAuthenticating ? (
             <>
