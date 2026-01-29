@@ -5,6 +5,7 @@ import Input from "./Input";
 import MultipleSelectInput from "./MultipleSelectInput";
 import RatingInput from "./RatingInput";
 import ButtonSpinner from "../UI/ButtonSpinner";
+import CoverInput from "../UI/CoverInput";
 
 function Select({ book }) {
   return (
@@ -37,9 +38,12 @@ function toInputDate(date) {
 function Form({ close, isEditMode }) {
   const { book } = isEditMode || {};
   const defaultRating = book?.rating ?? 0;
-  const { isMutating } = useBooks();
 
+  const { isMutating } = useBooks();
   const { addBook, editBook } = useBooks();
+
+  const [coverUrl, setCoverUrl] = useState(book?.coverUrl ?? "");
+  const [isUploadingCover, setIsUploadingCover] = useState(false);
   const [selectedGenres, setSelectedGenres] = useState(
     book?.genres?.map((g) => g.name) ?? [],
   );
@@ -71,7 +75,7 @@ function Form({ close, isEditMode }) {
         ? Number(e.target.numberPages.value)
         : null,
       genres: selectedGenres,
-      coverUrl: e.target.coverURL.value || null,
+      coverUrl: coverUrl || null,
       summary: e.target.summary.value || null,
       startDate: e.target.startReading.value
         ? new Date(e.target.startReading.value).toISOString()
@@ -105,13 +109,10 @@ function Form({ close, isEditMode }) {
         className="flex flex-col gap-5"
         onSubmit={(e) => handleSubmit(e, close)}
       >
-        <Input
-          label="Capa (URL)"
-          id="coverURL"
-          type="text"
-          name="coverURL"
-          defaultValue={`${isEditMode ? book.coverUrl : ""}`}
-          placeholder="Informe o URL da imagem"
+        <CoverInput
+          value={coverUrl}
+          onChange={setCoverUrl}
+          onUploadingChange={setIsUploadingCover}
         />
 
         <Input
@@ -157,7 +158,7 @@ function Form({ close, isEditMode }) {
           id="summary"
           textarea
           name="summary"
-          defaultValue={`${isEditMode ? book.summary ?? "" : ""}`}
+          defaultValue={`${isEditMode ? (book.summary ?? "") : ""}`}
           placeholder="Informe o resumo"
           cols="32"
         />
@@ -196,12 +197,12 @@ function Form({ close, isEditMode }) {
           </button>
           <button
             className="flex items-center justify-center gap-2 px-4 py-2 rounded-md bg-blue-500 text-white font-medium cursor-pointer hover:bg-blue-600 transition disabled:opacity-60"
-            disabled={isMutating}
+            disabled={isMutating || isUploadingCover}
           >
-            {isMutating ? (
+            {isMutating || isUploadingCover ? (
               <>
                 <ButtonSpinner />
-                Salvando...
+                {isUploadingCover ? "Enviando capa..." : "Salvando..."}
               </>
             ) : isEditMode ? (
               "Salvar"
