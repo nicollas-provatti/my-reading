@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../store/auth/use-auth";
 import ButtonSpinner from "../components/UI/ButtonSpinner";
@@ -23,7 +23,7 @@ export default function Register() {
       const email = emailRef.current.value;
       const password = passwordRef.current.value;
       const passwordConfirm = passwordConfirmRef.current.value;
-      
+
       await register(email, password, passwordConfirm);
       alert("Conta criada com sucesso! Faça login.");
       navigate("/login");
