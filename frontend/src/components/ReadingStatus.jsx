@@ -60,7 +60,7 @@ function ReadingStatus() {
           )}
 
           {completed.length !== 0 && (
-            <Card text="Concluídos" books={completed} status="Conluído" />
+            <Card text="Concluídos" books={completed} status="Concluído" />
           )}
 
           {abandoned.length !== 0 && (
