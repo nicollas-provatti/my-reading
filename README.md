@@ -31,7 +31,7 @@ O projeto foi desenvolvido com foco em **boas práticas de React**, organizaçã
 
 ## 📷 Captura
 
-![public/screenshot.png](public/screenshot.png)
+![screenshot](frontend/public/screenshot.png)
 
 ---
 
