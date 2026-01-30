@@ -44,6 +44,11 @@ O projeto foi desenvolvido com foco em **boas práticas de React**, organizaçã
 - **DaisyUI**
 - **React Icons**
 - **JavaScript (ES6+)**
+- **Node.js**
+- **Express**
+- **Prisma ORM**
+- **PostgreSQL (Neon)**
+- **Cloudinary (upload e armazenamento de imagens)**
 
 ---
 
@@ -61,6 +66,7 @@ O projeto foi desenvolvido com foco em **boas práticas de React**, organizaçã
 - Feedback visual de loading e erro
 - Modais reutilizáveis
 - Proteção de rotas com **React Router**
+- Upload de imagens com preview local e validações no frontend
 
 ### 🔐 Autenticação
 - Autenticação baseada em **JWT**
@@ -75,6 +81,7 @@ O projeto foi desenvolvido com foco em **boas práticas de React**, organizaçã
 - Separação de responsabilidades (controllers, services, routes)
 - Validação de permissões por usuário
 - Uso de variáveis de ambiente para dados sensíveis
+- Integração com serviço externo de armazenamento de imagens (**Cloudinary**)
 
 ### 🗄️ Banco de dados
 - Modelagem de dados relacional
@@ -82,12 +89,14 @@ O projeto foi desenvolvido com foco em **boas práticas de React**, organizaçã
 - Migrations para versionamento do schema
 - Relacionamentos entre entidades (User, Book, Genre)
 - Migração de banco (**SQLite → PostgreSQL**)
+- Persistência de URLs de imagens associadas aos livros
 
 ### 🚀 Deploy e produção
 - Deploy do frontend na **Vercel**
 - Deploy do backend no **Render**
 - Configuração de variáveis de ambiente em produção
 - Uso de banco PostgreSQL externo (**Neon**)
+- Armazenamento de imagens em serviço externo para compatibilidade com ambientes sem disco persistente
 - Adequação da aplicação às limitações de ambiente de produção
 
 
@@ -100,7 +109,7 @@ O projeto foi desenvolvido com foco em **boas práticas de React**, organizaçã
 git clone https://github.com/seu-usuario/minhas-leituras.git
 
 # Para o frontend:
-# 1. Entre na pasta do projeto
+# 1. Entre na pasta frontend
 cd my-readings
 # 2. Instale as dependências
 npm install
@@ -109,7 +118,7 @@ npm install
 npm run dev
 
 # Para o backend (em outro terminal):
-# 1. Entre na pasta do backend
+# 1. Entre na pasta backend
 cd my-readings/backend
 
 # 2. Instale as dependências
@@ -200,6 +209,30 @@ Para resolver o problema de persistência em produção, o projeto foi migrado p
 - Uso de migrations para versionamento do banco
 - Arquitetura mais próxima de um cenário profissional
 
+## 6️⃣ Upload de imagens para livros (Cloud Storage)
+
+Na etapa mais recente, o projeto evoluiu para suportar **upload de imagens de capa dos livros**, adicionando um recurso essencial para uma aplicação real de gerenciamento de leituras.
+
+**Motivações para essa adição:**
+
+- Melhorar a experiência visual da aplicação
+- Associar uma identidade visual a cada livro
+- Explorar o fluxo completo de upload de arquivos em uma arquitetura fullstack
+
+**Abordagem adotada**
+
+- Upload de imagens realizado no backend
+- Integração com um serviço de armazenamento em nuvem (Cloudinary)
+- Persistência apenas da URL da imagem no banco de dados
+- Associação da imagem ao livro e, indiretamente, ao usuário autenticado
+
+**Benefícios dessa etapa**
+
+- Suporte a mídias externas sem sobrecarregar o backend
+- Persistência confiável de imagens em produção
+- Aplicação mais próxima de um cenário real de mercado
+- Base preparada para futuras evoluções (ex: edição de capa, remoção de imagens, cache, otimização)
+
 ## 📌 Estado atual do projeto
 
 - Frontend: **React + Vite**
@@ -207,6 +240,7 @@ Para resolver o problema de persistência em produção, o projeto foi migrado p
 - Autenticação: **JWT**
 - Banco de dados: **PostgreSQL (Neon)**
 - ORM: **Prisma**
+- Armazenamento de imagens: **Cloud Storage (Cloudinary)**
 - Deploy:
   - Frontend: **Vercel**
   - Backend: **Render**
