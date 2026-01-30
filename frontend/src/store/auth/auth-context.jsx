@@ -59,6 +59,7 @@ export function AuthContextProvider({ children }) {
   function handleLogout() {
     localStorage.removeItem("token");
     setToken(null);
+    setAuthError(null);
   }
 
   function handleClearAuthError() {

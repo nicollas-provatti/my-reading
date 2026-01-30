@@ -14,10 +14,8 @@ function App() {
       <div className="min-h-screen flex flex-col">
         <FilterContextProvider>
           <Routes>
-            <Route path="/login" element={<Login />}></Route>
+            <Route path="/" element={<Login />}></Route>
             <Route path="/register" element={<Register />} />
-
-            <Route path="/" element={<Navigate to="/login" replace />} />
 
             <Route
               path="/dashboard"

@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { useAuth } from "../store/auth/use-auth";
-import { useNavigate, Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import ButtonSpinner from "../components/UI/ButtonSpinner";
 import AuthErrorMessage from "../components/UI/AuthErrorMessage";
 import EmailInput from "../components/UI/daisyUI/EmailInput";
@@ -9,12 +9,15 @@ import PasswordInput from "../components/UI/daisyUI/PasswordInput";
 export default function Login() {
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
-  const { login, isAuthenticating, authError, clearAuthError } = useAuth();
-  const navigate = useNavigate();
+  const { login, isAuthenticated, isAuthenticating, authError, clearAuthError } = useAuth();
 
   useEffect(() => {
     clearAuthError();
   }, []);
+
+  if (isAuthenticated) {
+    return <Navigate to="/dashboard" replace />;
+  }
 
   async function handleSubmit(e) {
     try {
@@ -24,7 +27,6 @@ export default function Login() {
       const password = passwordRef.current.value;
 
       await login(email, password);
-      navigate("/dashboard");
     } catch {}
   }
 
@@ -35,7 +37,7 @@ export default function Login() {
         className="w-full max-w-sm bg-white p-6 rounded-xl shadow-md flex flex-col gap-4"
       >
         <h1 className="text-2xl font-semibold text-zinc-800 text-center">
-          Login
+          Faça o login
         </h1>
 
         <div>
