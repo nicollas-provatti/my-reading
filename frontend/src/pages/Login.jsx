@@ -3,6 +3,8 @@ import { useAuth } from "../store/auth/use-auth";
 import { useNavigate, Link } from "react-router-dom";
 import ButtonSpinner from "../components/UI/ButtonSpinner";
 import AuthErrorMessage from "../components/UI/AuthErrorMessage";
+import EmailInput from "../components/UI/daisyUI/EmailInput";
+import PasswordInput from "../components/UI/daisyUI/PasswordInput";
 
 export default function Login() {
   const emailRef = useRef(null);
@@ -37,14 +39,7 @@ export default function Login() {
         </h1>
 
         <div>
-          <input
-            type="email"
-            placeholder="Email"
-            autoComplete="username"
-            className="w-full px-4 py-2 border rounded-lg outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-            required
-            ref={emailRef}
-          />
+          <EmailInput ref={emailRef} />
 
           {authError?.field === "email" && (
             <AuthErrorMessage text={authError.message} />
@@ -52,14 +47,7 @@ export default function Login() {
         </div>
 
         <div>
-          <input
-            type="password"
-            placeholder="Senha"
-            autoComplete="current-password"
-            className="w-full px-4 py-2 border rounded-lg outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-            required
-            ref={passwordRef}
-          />
+          <PasswordInput placeholder="Senha" ref={passwordRef} />
 
           {authError?.field === "password" && (
             <AuthErrorMessage text={authError.message} />

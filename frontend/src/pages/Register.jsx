@@ -3,6 +3,8 @@ import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../store/auth/use-auth";
 import ButtonSpinner from "../components/UI/ButtonSpinner";
 import AuthErrorMessage from "../components/UI/AuthErrorMessage";
+import EmailInput from "../components/UI/daisyUI/EmailInput";
+import PasswordInput from "../components/UI/daisyUI/PasswordInput";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -41,14 +43,7 @@ export default function Register() {
         </h1>
 
         <div>
-          <input
-            type="email"
-            placeholder="Email"
-            required
-            autoComplete="username"
-            className="w-full px-4 py-2 border rounded-lg"
-            ref={emailRef}
-          />
+          <EmailInput ref={emailRef} />
 
           {authError?.field === "email" && (
             <AuthErrorMessage text={authError.message} />
@@ -56,23 +51,11 @@ export default function Register() {
         </div>
 
         <div>
-          <input
-            type="password"
-            placeholder="Senha"
-            required
-            autoComplete="username"
-            className="mb-4 w-full px-4 py-2 border rounded-lg"
-            ref={passwordRef}
-          />
+          <div className="flex flex-col gap-4">
+            <PasswordInput placeholder="Senha" ref={passwordRef} />
 
-          <input
-            type="password"
-            placeholder="Confirme sua senha"
-            required
-            autoComplete="current-password"
-            className="w-full px-4 py-2 border rounded-lg"
-            ref={passwordConfirmRef}
-          />
+            <PasswordInput placeholder="Confirma sua senha" ref={passwordConfirmRef} />
+          </div>
 
           {authError?.field === "password" && (
             <AuthErrorMessage text={authError.message} />

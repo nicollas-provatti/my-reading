@@ -1,5 +1,5 @@
 function AuthErrorMessage({ text }) {
-  return <p className="mt-1 text-sm font-semibold text-red-400">* {text}</p>;
+  return <p className="mt-1 text-xs text-red-400">* {text}</p>;
 }
 
 export default AuthErrorMessage;
