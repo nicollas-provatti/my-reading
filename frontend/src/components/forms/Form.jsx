@@ -5,12 +5,12 @@ import Input from "./Input";
 import MultipleSelectInput from "./MultipleSelectInput";
 import RatingInput from "./RatingInput";
 import ButtonSpinner from "../UI/ButtonSpinner";
-import CoverInput from "../UI/CoverInput";
+import CoverInput from "../forms/CoverInput";
 
 function Select({ book }) {
   return (
     <div className="flex flex-col gap-1">
-      <label htmlFor="status" className="font-semibold">
+      <label htmlFor="status" className="text-sm font-medium text-zinc-700">
         Status
       </label>
       <select
@@ -18,7 +18,7 @@ function Select({ book }) {
         id="status"
         required
         defaultValue={`${book?.status}`}
-        className="border border-zinc-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-300 transition"
+        className="rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-2 text-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition"
       >
         <option value="Em andamento">Em andamento</option>
         <option value="Próxima leitura">Próxima leitura</option>
@@ -96,17 +96,27 @@ function Form({ close, isEditMode }) {
 
   return (
     <>
-      <div className="flex justify-between items-center px-3 py-2 bg-white shadow-sm rounded-md">
-        <h2 className="font-semibold text-lg">Preencha os dados</h2>
+      <div className="flex justify-between items-center mb-2">
+        <div>
+          <h2 className="text-lg font-semibold">
+            {isEditMode ? "Editar livro" : "Adicionar livro"}
+          </h2>
+          <p className="text-sm text-zinc-500">
+            Preencha as informações abaixo
+          </p>
+        </div>
+
         <button
-          className="p-2 rounded-full text-zinc-500 bg-zinc-50 hover:bg-zinc-100 transition cursor-pointer"
+          className=" p-2 rounded-full text-zinc-500 cursor-pointer hover:bg-zinc-100 transition"
           onClick={close}
+          type="button"
         >
           <IoMdClose />
         </button>
       </div>
+
       <form
-        className="flex flex-col gap-5"
+        className="flex flex-col gap-6 bg-white p-5 rounded-xl shadow-sm border border-zinc-100"
         onSubmit={(e) => handleSubmit(e, close)}
       >
         <CoverInput
@@ -189,7 +199,7 @@ function Form({ close, isEditMode }) {
 
         <div className="self-end flex gap-3">
           <button
-            className=" px-4 py-2 rounded-md bg-zinc-200 text-zinc-700 cursor-pointer hover:bg-zinc-300 transition"
+            className=" px-4 py-2 rounded-md bg-zinc-100 text-zinc-700 cursor-pointer hover:bg-zinc-200 transition"
             type="button"
             onClick={close}
           >

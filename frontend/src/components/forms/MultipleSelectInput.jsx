@@ -27,7 +27,7 @@ function MultipleSelectInput({ selectedGenres, onChange }) {
           return (
             <label
               key={genre}
-              className={`flex gap-2 px-2 py-1 rounded-md cursor-pointer text-sm ${
+              className={`flex gap-2 px-2 py-1 rounded-md cursor-pointer text-xs sm:text-sm ${
                 isChecked
                   ? "bg-blue-100 text-blue-900"
                   : "bg-zinc-100"

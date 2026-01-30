@@ -14,7 +14,7 @@ function Bookcase() {
       {books.length > 0 ? (
         books.map((book) => <Book key={book.id} book={book} filter />)
       ) : (
-        <p className="text-center md:col-span-2 lg:col-span-4">Você ainda não adicionou nenhum livro.</p>
+        <p className="text-center sm:col-span-2 lg:col-span-4">Você ainda não adicionou nenhum livro.</p>
       )}
     </div>
   );

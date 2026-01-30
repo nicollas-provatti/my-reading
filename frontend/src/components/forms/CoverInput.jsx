@@ -1,5 +1,5 @@
 import { useState } from "react";
-import ButtonSpinner from "./ButtonSpinner";
+import ButtonSpinner from "../UI/ButtonSpinner";
 import { uploadCover } from "../../services/uploadService";
 
 function CoverInput({ value, onChange, onUploadingChange }) {
@@ -27,7 +27,7 @@ function CoverInput({ value, onChange, onUploadingChange }) {
 
   return (
     <div className="flex flex-col gap-2">
-      <label className="font-semibold">Capa do livro</label>
+      <label className="text-sm font-medium text-zinc-700">Capa do livro</label>
 
       <div className="flex gap-3">
         <div className="flex-1 flex flex-col gap-3">
@@ -36,7 +36,15 @@ function CoverInput({ value, onChange, onUploadingChange }) {
             placeholder="URL da imagem (opcional)"
             value={value}
             onChange={(e) => onChange(e.target.value)}
-            className="w-full px-4 py-2 border border-zinc-300 rounded-md outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full rounded-lg
+            border border-zinc-200
+            bg-zinc-50
+            px-3 py-2
+            text-sm
+            focus:outline-none
+            focus:border-blue-500
+            focus:ring-2 focus:ring-blue-100
+            transition"
           />
 
           <div className="flex items-center gap-3">
